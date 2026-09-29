@@ -5,9 +5,7 @@
 .Rhistory
 .RData
 
-# Downloaded datasets, trained models, and generated analyses
-data/
-results/
+# Temporary generated files
 tmp/
 
 # Python build and cache files
@@ -23,10 +21,3 @@ dist/
 .vscode/
 .idea/
 
-# Large generated scientific artifacts outside ignored directories
-*.rds
-*.h5
-*.h5ad
-*.mtx
-*.npz
-*.pt

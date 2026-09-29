@@ -1,0 +1,290 @@
+"Ours","Published","Freq"
+"B_Cells","B_Cells",561
+"CD4+_T_Cells","B_Cells",0
+"CD8+_T_Cells","B_Cells",0
+"DCIS 1","B_Cells",0
+"DCIS 2","B_Cells",0
+"Endothelial","B_Cells",0
+"Invasive_Tumor","B_Cells",0
+"IRF7+_DCs","B_Cells",0
+"LAMP3+_DCs","B_Cells",0
+"Macrophages_1","B_Cells",1
+"Macrophages_2","B_Cells",2
+"Mast_Cells","B_Cells",0
+"Myoepi_ACTA2+","B_Cells",0
+"Myoepi_KRT15+","B_Cells",0
+"Perivascular-Like","B_Cells",0
+"Prolif_Invasive_Tumor","B_Cells",0
+"Stromal","B_Cells",0
+"B_Cells","CD4+_T_Cells",0
+"CD4+_T_Cells","CD4+_T_Cells",1145
+"CD8+_T_Cells","CD4+_T_Cells",4
+"DCIS 1","CD4+_T_Cells",0
+"DCIS 2","CD4+_T_Cells",0
+"Endothelial","CD4+_T_Cells",2
+"Invasive_Tumor","CD4+_T_Cells",0
+"IRF7+_DCs","CD4+_T_Cells",0
+"LAMP3+_DCs","CD4+_T_Cells",0
+"Macrophages_1","CD4+_T_Cells",3
+"Macrophages_2","CD4+_T_Cells",1
+"Mast_Cells","CD4+_T_Cells",0
+"Myoepi_ACTA2+","CD4+_T_Cells",0
+"Myoepi_KRT15+","CD4+_T_Cells",0
+"Perivascular-Like","CD4+_T_Cells",0
+"Prolif_Invasive_Tumor","CD4+_T_Cells",0
+"Stromal","CD4+_T_Cells",1
+"B_Cells","CD8+_T_Cells",0
+"CD4+_T_Cells","CD8+_T_Cells",4
+"CD8+_T_Cells","CD8+_T_Cells",856
+"DCIS 1","CD8+_T_Cells",0
+"DCIS 2","CD8+_T_Cells",0
+"Endothelial","CD8+_T_Cells",0
+"Invasive_Tumor","CD8+_T_Cells",0
+"IRF7+_DCs","CD8+_T_Cells",0
+"LAMP3+_DCs","CD8+_T_Cells",0
+"Macrophages_1","CD8+_T_Cells",0
+"Macrophages_2","CD8+_T_Cells",0
+"Mast_Cells","CD8+_T_Cells",0
+"Myoepi_ACTA2+","CD8+_T_Cells",0
+"Myoepi_KRT15+","CD8+_T_Cells",0
+"Perivascular-Like","CD8+_T_Cells",0
+"Prolif_Invasive_Tumor","CD8+_T_Cells",0
+"Stromal","CD8+_T_Cells",3
+"B_Cells","DCIS 1",0
+"CD4+_T_Cells","DCIS 1",0
+"CD8+_T_Cells","DCIS 1",0
+"DCIS 1","DCIS 1",74
+"DCIS 2","DCIS 1",0
+"Endothelial","DCIS 1",0
+"Invasive_Tumor","DCIS 1",9
+"IRF7+_DCs","DCIS 1",0
+"LAMP3+_DCs","DCIS 1",0
+"Macrophages_1","DCIS 1",0
+"Macrophages_2","DCIS 1",0
+"Mast_Cells","DCIS 1",0
+"Myoepi_ACTA2+","DCIS 1",0
+"Myoepi_KRT15+","DCIS 1",0
+"Perivascular-Like","DCIS 1",0
+"Prolif_Invasive_Tumor","DCIS 1",1
+"Stromal","DCIS 1",0
+"B_Cells","DCIS 2",0
+"CD4+_T_Cells","DCIS 2",0
+"CD8+_T_Cells","DCIS 2",0
+"DCIS 1","DCIS 2",27
+"DCIS 2","DCIS 2",771
+"Endothelial","DCIS 2",0
+"Invasive_Tumor","DCIS 2",24
+"IRF7+_DCs","DCIS 2",0
+"LAMP3+_DCs","DCIS 2",0
+"Macrophages_1","DCIS 2",1
+"Macrophages_2","DCIS 2",0
+"Mast_Cells","DCIS 2",0
+"Myoepi_ACTA2+","DCIS 2",10
+"Myoepi_KRT15+","DCIS 2",4
+"Perivascular-Like","DCIS 2",0
+"Prolif_Invasive_Tumor","DCIS 2",8
+"Stromal","DCIS 2",0
+"B_Cells","Endothelial",0
+"CD4+_T_Cells","Endothelial",0
+"CD8+_T_Cells","Endothelial",0
+"DCIS 1","Endothelial",0
+"DCIS 2","Endothelial",0
+"Endothelial","Endothelial",681
+"Invasive_Tumor","Endothelial",0
+"IRF7+_DCs","Endothelial",0
+"LAMP3+_DCs","Endothelial",0
+"Macrophages_1","Endothelial",0
+"Macrophages_2","Endothelial",0
+"Mast_Cells","Endothelial",0
+"Myoepi_ACTA2+","Endothelial",0
+"Myoepi_KRT15+","Endothelial",0
+"Perivascular-Like","Endothelial",0
+"Prolif_Invasive_Tumor","Endothelial",0
+"Stromal","Endothelial",2
+"B_Cells","Invasive_Tumor",0
+"CD4+_T_Cells","Invasive_Tumor",1
+"CD8+_T_Cells","Invasive_Tumor",0
+"DCIS 1","Invasive_Tumor",18
+"DCIS 2","Invasive_Tumor",4
+"Endothelial","Invasive_Tumor",1
+"Invasive_Tumor","Invasive_Tumor",1564
+"IRF7+_DCs","Invasive_Tumor",0
+"LAMP3+_DCs","Invasive_Tumor",0
+"Macrophages_1","Invasive_Tumor",1
+"Macrophages_2","Invasive_Tumor",1
+"Mast_Cells","Invasive_Tumor",0
+"Myoepi_ACTA2+","Invasive_Tumor",0
+"Myoepi_KRT15+","Invasive_Tumor",0
+"Perivascular-Like","Invasive_Tumor",0
+"Prolif_Invasive_Tumor","Invasive_Tumor",7
+"Stromal","Invasive_Tumor",0
+"B_Cells","IRF7+_DCs",0
+"CD4+_T_Cells","IRF7+_DCs",0
+"CD8+_T_Cells","IRF7+_DCs",0
+"DCIS 1","IRF7+_DCs",0
+"DCIS 2","IRF7+_DCs",0
+"Endothelial","IRF7+_DCs",0
+"Invasive_Tumor","IRF7+_DCs",0
+"IRF7+_DCs","IRF7+_DCs",73
+"LAMP3+_DCs","IRF7+_DCs",0
+"Macrophages_1","IRF7+_DCs",0
+"Macrophages_2","IRF7+_DCs",2
+"Mast_Cells","IRF7+_DCs",0
+"Myoepi_ACTA2+","IRF7+_DCs",0
+"Myoepi_KRT15+","IRF7+_DCs",0
+"Perivascular-Like","IRF7+_DCs",0
+"Prolif_Invasive_Tumor","IRF7+_DCs",0
+"Stromal","IRF7+_DCs",0
+"B_Cells","LAMP3+_DCs",0
+"CD4+_T_Cells","LAMP3+_DCs",0
+"CD8+_T_Cells","LAMP3+_DCs",0
+"DCIS 1","LAMP3+_DCs",0
+"DCIS 2","LAMP3+_DCs",0
+"Endothelial","LAMP3+_DCs",0
+"Invasive_Tumor","LAMP3+_DCs",0
+"IRF7+_DCs","LAMP3+_DCs",0
+"LAMP3+_DCs","LAMP3+_DCs",56
+"Macrophages_1","LAMP3+_DCs",1
+"Macrophages_2","LAMP3+_DCs",0
+"Mast_Cells","LAMP3+_DCs",0
+"Myoepi_ACTA2+","LAMP3+_DCs",0
+"Myoepi_KRT15+","LAMP3+_DCs",0
+"Perivascular-Like","LAMP3+_DCs",0
+"Prolif_Invasive_Tumor","LAMP3+_DCs",0
+"Stromal","LAMP3+_DCs",0
+"B_Cells","Macrophages_1",0
+"CD4+_T_Cells","Macrophages_1",0
+"CD8+_T_Cells","Macrophages_1",0
+"DCIS 1","Macrophages_1",0
+"DCIS 2","Macrophages_1",0
+"Endothelial","Macrophages_1",0
+"Invasive_Tumor","Macrophages_1",0
+"IRF7+_DCs","Macrophages_1",5
+"LAMP3+_DCs","Macrophages_1",3
+"Macrophages_1","Macrophages_1",820
+"Macrophages_2","Macrophages_1",55
+"Mast_Cells","Macrophages_1",0
+"Myoepi_ACTA2+","Macrophages_1",0
+"Myoepi_KRT15+","Macrophages_1",0
+"Perivascular-Like","Macrophages_1",0
+"Prolif_Invasive_Tumor","Macrophages_1",0
+"Stromal","Macrophages_1",0
+"B_Cells","Macrophages_2",3
+"CD4+_T_Cells","Macrophages_2",0
+"CD8+_T_Cells","Macrophages_2",2
+"DCIS 1","Macrophages_2",0
+"DCIS 2","Macrophages_2",0
+"Endothelial","Macrophages_2",0
+"Invasive_Tumor","Macrophages_2",0
+"IRF7+_DCs","Macrophages_2",0
+"LAMP3+_DCs","Macrophages_2",1
+"Macrophages_1","Macrophages_2",0
+"Macrophages_2","Macrophages_2",276
+"Mast_Cells","Macrophages_2",0
+"Myoepi_ACTA2+","Macrophages_2",0
+"Myoepi_KRT15+","Macrophages_2",0
+"Perivascular-Like","Macrophages_2",0
+"Prolif_Invasive_Tumor","Macrophages_2",0
+"Stromal","Macrophages_2",0
+"B_Cells","Mast_Cells",0
+"CD4+_T_Cells","Mast_Cells",0
+"CD8+_T_Cells","Mast_Cells",0
+"DCIS 1","Mast_Cells",0
+"DCIS 2","Mast_Cells",0
+"Endothelial","Mast_Cells",0
+"Invasive_Tumor","Mast_Cells",0
+"IRF7+_DCs","Mast_Cells",0
+"LAMP3+_DCs","Mast_Cells",0
+"Macrophages_1","Mast_Cells",0
+"Macrophages_2","Mast_Cells",1
+"Mast_Cells","Mast_Cells",7
+"Myoepi_ACTA2+","Mast_Cells",0
+"Myoepi_KRT15+","Mast_Cells",0
+"Perivascular-Like","Mast_Cells",0
+"Prolif_Invasive_Tumor","Mast_Cells",0
+"Stromal","Mast_Cells",0
+"B_Cells","Myoepi_ACTA2+",0
+"CD4+_T_Cells","Myoepi_ACTA2+",0
+"CD8+_T_Cells","Myoepi_ACTA2+",0
+"DCIS 1","Myoepi_ACTA2+",0
+"DCIS 2","Myoepi_ACTA2+",0
+"Endothelial","Myoepi_ACTA2+",0
+"Invasive_Tumor","Myoepi_ACTA2+",0
+"IRF7+_DCs","Myoepi_ACTA2+",0
+"LAMP3+_DCs","Myoepi_ACTA2+",0
+"Macrophages_1","Myoepi_ACTA2+",0
+"Macrophages_2","Myoepi_ACTA2+",0
+"Mast_Cells","Myoepi_ACTA2+",0
+"Myoepi_ACTA2+","Myoepi_ACTA2+",919
+"Myoepi_KRT15+","Myoepi_ACTA2+",9
+"Perivascular-Like","Myoepi_ACTA2+",0
+"Prolif_Invasive_Tumor","Myoepi_ACTA2+",0
+"Stromal","Myoepi_ACTA2+",0
+"B_Cells","Myoepi_KRT15+",0
+"CD4+_T_Cells","Myoepi_KRT15+",0
+"CD8+_T_Cells","Myoepi_KRT15+",0
+"DCIS 1","Myoepi_KRT15+",0
+"DCIS 2","Myoepi_KRT15+",1
+"Endothelial","Myoepi_KRT15+",0
+"Invasive_Tumor","Myoepi_KRT15+",0
+"IRF7+_DCs","Myoepi_KRT15+",0
+"LAMP3+_DCs","Myoepi_KRT15+",0
+"Macrophages_1","Myoepi_KRT15+",0
+"Macrophages_2","Myoepi_KRT15+",0
+"Mast_Cells","Myoepi_KRT15+",0
+"Myoepi_ACTA2+","Myoepi_KRT15+",20
+"Myoepi_KRT15+","Myoepi_KRT15+",388
+"Perivascular-Like","Myoepi_KRT15+",0
+"Prolif_Invasive_Tumor","Myoepi_KRT15+",0
+"Stromal","Myoepi_KRT15+",0
+"B_Cells","Perivascular-Like",0
+"CD4+_T_Cells","Perivascular-Like",1
+"CD8+_T_Cells","Perivascular-Like",0
+"DCIS 1","Perivascular-Like",0
+"DCIS 2","Perivascular-Like",0
+"Endothelial","Perivascular-Like",5
+"Invasive_Tumor","Perivascular-Like",0
+"IRF7+_DCs","Perivascular-Like",0
+"LAMP3+_DCs","Perivascular-Like",0
+"Macrophages_1","Perivascular-Like",1
+"Macrophages_2","Perivascular-Like",0
+"Mast_Cells","Perivascular-Like",0
+"Myoepi_ACTA2+","Perivascular-Like",0
+"Myoepi_KRT15+","Perivascular-Like",0
+"Perivascular-Like","Perivascular-Like",599
+"Prolif_Invasive_Tumor","Perivascular-Like",0
+"Stromal","Perivascular-Like",50
+"B_Cells","Prolif_Invasive_Tumor",0
+"CD4+_T_Cells","Prolif_Invasive_Tumor",0
+"CD8+_T_Cells","Prolif_Invasive_Tumor",0
+"DCIS 1","Prolif_Invasive_Tumor",6
+"DCIS 2","Prolif_Invasive_Tumor",2
+"Endothelial","Prolif_Invasive_Tumor",0
+"Invasive_Tumor","Prolif_Invasive_Tumor",23
+"IRF7+_DCs","Prolif_Invasive_Tumor",0
+"LAMP3+_DCs","Prolif_Invasive_Tumor",0
+"Macrophages_1","Prolif_Invasive_Tumor",1
+"Macrophages_2","Prolif_Invasive_Tumor",0
+"Mast_Cells","Prolif_Invasive_Tumor",0
+"Myoepi_ACTA2+","Prolif_Invasive_Tumor",0
+"Myoepi_KRT15+","Prolif_Invasive_Tumor",0
+"Perivascular-Like","Prolif_Invasive_Tumor",0
+"Prolif_Invasive_Tumor","Prolif_Invasive_Tumor",489
+"Stromal","Prolif_Invasive_Tumor",0
+"B_Cells","Stromal",25
+"CD4+_T_Cells","Stromal",21
+"CD8+_T_Cells","Stromal",30
+"DCIS 1","Stromal",1
+"DCIS 2","Stromal",1
+"Endothelial","Stromal",13
+"Invasive_Tumor","Stromal",2
+"IRF7+_DCs","Stromal",1
+"LAMP3+_DCs","Stromal",0
+"Macrophages_1","Stromal",20
+"Macrophages_2","Stromal",24
+"Mast_Cells","Stromal",3
+"Myoepi_ACTA2+","Stromal",5
+"Myoepi_KRT15+","Stromal",0
+"Perivascular-Like","Stromal",73
+"Prolif_Invasive_Tumor","Stromal",1
+"Stromal","Stromal",4973

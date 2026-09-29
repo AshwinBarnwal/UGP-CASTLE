@@ -1,0 +1,17 @@
+"Ours","Published","Freq"
+"reject","reject",114
+"singlet","reject",15
+"doublet_certain","reject",2
+"doublet_uncertain","reject",1
+"reject","singlet",22
+"singlet","singlet",11264
+"doublet_certain","singlet",60
+"doublet_uncertain","singlet",8
+"reject","doublet_certain",3
+"singlet","doublet_certain",283
+"doublet_certain","doublet_certain",2908
+"doublet_uncertain","doublet_certain",46
+"reject","doublet_uncertain",14
+"singlet","doublet_uncertain",24
+"doublet_certain","doublet_uncertain",35
+"doublet_uncertain","doublet_uncertain",176

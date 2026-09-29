@@ -1,0 +1,2 @@
+"common_result_cells","primary_comparable_cells","secondary_comparable_cells","weight_comparable_cells","shared_cell_types","spot_class_agreement","primary_type_agreement","secondary_type_agreement","dominant_weight_type_agreement","weight_correlation","weight_MAE","weight_RMSE","median_cell_L1","mean_cell_L1"
+14975,14804,14975,14804,17,0.965742904841402,0.962712780329641,0.899899833055092,0.962780329640638,0.986426882821312,0.0045430683487363,0.0326800938107333,0.0383611281534286,0.0772321619285171

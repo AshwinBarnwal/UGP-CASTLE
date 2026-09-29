@@ -1,0 +1,17 @@
+{
+  "common_cells": 14975,
+  "reference_types": 17,
+  "castle_intrinsic": {
+    "adjusted_rand_index": 0.2854707925146332,
+    "normalized_mutual_information": 0.5530536306123139,
+    "knn15_label_purity": 0.7570795770728993,
+    "label_silhouette_5000": 0.04764409363269806
+  },
+  "raw_log_normalized_pca": {
+    "adjusted_rand_index": 0.2875649070584459,
+    "normalized_mutual_information": 0.5657570140247619,
+    "knn15_label_purity": 0.7422148024485253,
+    "label_silhouette_5000": 0.0511473118011521
+  },
+  "note": "RCTD labels are evaluation-only and were not used for CASTLE training."
+}

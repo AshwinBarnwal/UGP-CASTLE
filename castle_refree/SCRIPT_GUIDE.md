@@ -1,4 +1,4 @@
-# CASTLE-RefFree script guide
+# CASTLE-RefFree implementation, scripts, and results guide
 
 This document describes the executable scripts, package modules, configuration
 files, their inputs and outputs, and how they fit together. Paths are relative
@@ -321,3 +321,210 @@ comparison must use identical cells and labels for every method, the same count
 normalization and 50-PC representation where appropriate, the same malignant
 cell exclusions, and the same scIB Leiden/K-means and biological-conservation
 metrics.
+
+## What differs between the completed implementations
+
+All four serious crop experiments use exactly the same 14,996 filtered Xenium
+cells, 312 retained genes, 12-neighbor spatial graph, network dimensions,
+training schedule, optimizer, random seed, and maximum leakage fraction of
+0.35. Consequently, their differences can be attributed to the listed ablation
+settings rather than different input cells.
+
+The common raw baseline is also identical in every crop comparison: raw counts
+are normalized to 10,000 counts per cell, transformed with `log1p`, and reduced
+to 16 dimensions with truncated SVD. CASTLE is evaluated through its native
+16-dimensional intrinsic embedding.
+
+| Result name | Expression-guided edges | Final intrinsic beta | Eta penalty | What changed |
+|---|---:|---:|---:|---|
+| `expression_beta4` | Yes | 4 | 0.01 | Original reference-free implementation used as the first serious baseline. |
+| `geometry_only` | No | 4 | 0.01 | Keeps denoising and spillover estimation, but edge weights depend only on distance. |
+| `expression_beta2` | Yes | 2 | 0.01 | Weakens compression of the intrinsic latent representation. This was selected for the full run. |
+| `expression_beta4_eta05` | Yes | 4 | 0.05 | Penalizes predicted leakage five times more strongly than the beta-4 baseline. |
+| `15000_smoke` | Yes | 4 | 0.01 | Only five total epochs. This checks that the pipeline executes; it is not a benchmark result. |
+| full `expression_beta2` | Yes | 2 | 0.01 | Applies the selected crop configuration to 164,995 filtered cells and 313 genes. |
+
+Here, intrinsic beta is the coefficient on the intrinsic latent KL term. A
+higher value forces the latent distribution closer to a standard normal and
+therefore imposes a stronger information bottleneck. Lowering the final value
+from 4 to 2 lets the intrinsic embedding retain more expression information.
+The eta penalty discourages the model from explaining counts as spatial
+spillover. Expression-guided edges alter which nearby donor is considered most
+plausible by comparing a donor's decoded expression profile with the positive
+residual expression in a neighboring recipient.
+
+## Meaning of every reported measure
+
+### Count-removal and model-fit measures
+
+- **Fraction of counts removed:** the total fractional count mass assigned to
+  contamination divided by the original count total. More is not automatically
+  better: zero can mean no correction, while excessive removal can erase true
+  biology.
+- **Eta:** a cell-level model estimate controlling how much of that cell's
+  expression can contribute to neighboring cells. It is capped at 0.35 here.
+  Eta is a model parameter, not a measured ground-truth contamination rate.
+- **Segmentation confidence / cell-count retention:** purified total counts
+  divided by raw total counts for a cell. A value of 0.78 means approximately
+  78% of its observed count mass was attributed to the cell itself.
+- **Negative-binomial reconstruction loss:** disagreement between observed
+  counts and the model's own-expression plus incoming-contamination expectation.
+  Lower is better for fit, but a flexible model can fit well without learning
+  the desired biology.
+- **Intrinsic KL:** strength of departure of the intrinsic latent distribution
+  from its standard-normal prior. Its raw value is not a quality score. It is
+  expected to rise when beta is lowered because the model is allowed to encode
+  more information.
+- **Niche KL and mean niche-dimension standard deviation:** indicate how much
+  information/variation is being used in the niche latent. Values near zero can
+  indicate that the niche branch has collapsed or is contributing very little.
+
+### Unsupervised cluster-geometry measures
+
+- **Silhouette:** for each point, compares cohesion with its own assigned cluster
+  against distance to the nearest alternative cluster. It ranges from -1 to 1;
+  higher is better. Here it assesses K-means cluster geometry, not biological
+  correctness.
+- **Davies–Bouldin index:** compares within-cluster scatter to between-cluster
+  separation. Lower is better. Its scale depends on the data and number of
+  clusters.
+- **Calinski–Harabasz index:** between-cluster dispersion divided by
+  within-cluster dispersion. Higher is better, but it scales with sample size
+  and therefore should not be compared directly between the crop and full run.
+
+### RCTD-label agreement measures
+
+- **Adjusted Rand index (ARI):** agreement between pairs of cells placed
+  together/apart by K-means and by RCTD, corrected for chance. One is perfect,
+  zero is chance-level expectation, and negative values are possible.
+- **Normalized mutual information (NMI):** shared information between K-means
+  clusters and RCTD labels, normalized to 0–1. It is less sensitive than ARI to
+  some differences in cluster size and fragmentation.
+- **15-NN label purity:** fraction of the 15 nearest neighbors in embedding space
+  that share the query cell's RCTD label. Higher means stronger local cell-type
+  organization; it can be inflated by abundant cell types.
+- **RCTD-label silhouette:** silhouette calculated using RCTD labels themselves
+  rather than K-means assignments. It asks whether externally labelled cell
+  types form compact, separated regions. This is a stricter test than merely
+  obtaining compact K-means clusters.
+
+RCTD labels are evaluation targets only; the training code never receives
+them. Nevertheless, RCTD is still an estimated label source rather than
+experimental ground truth, and it is derived from the same Xenium expression
+data plus a Chromium reference. These measurements show agreement with RCTD,
+not proof of perfect biological identity or perfect decontamination.
+
+## Crop results and interpretation
+
+| Implementation | Removed | Reconstruction | Unsupervised silhouette | ARI | NMI | 15-NN purity | Label silhouette |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Raw 16D expression baseline | — | — | — | 0.2876 | 0.5658 | 0.7422 | 0.0511 |
+| Expression beta 4 | 20.72% | 189.03 | 0.2887 | 0.2858 | 0.5556 | 0.7545 | 0.0443 |
+| Geometry only | 19.41% | 189.09 | 0.3641 | 0.2855 | 0.5531 | 0.7571 | 0.0476 |
+| Expression beta 2 | 17.65% | 185.00 | 0.3181 | 0.3347 | 0.6114 | 0.7761 | 0.1034 |
+| Expression beta 4 + stronger eta penalty | 20.18% | 188.99 | 0.3167 | 0.2616 | 0.5513 | 0.7549 | 0.0447 |
+
+### Expression-guided beta 4
+
+This implementation removes 20.72% of total count mass. Relative to raw 16D
+expression, local 15-NN label purity rises from 0.7422 to 0.7545, but ARI, NMI,
+and label silhouette are slightly worse. Therefore the first expression-guided
+implementation improves local same-label neighborhoods but does not improve
+global recovery or separation of the 17 RCTD types. Its stronger beta-4
+bottleneck is a plausible reason that useful cell-type information was lost.
+
+### Geometry-only beta 4
+
+This changes only the edge-weight mechanism: contamination still exists, but a
+nearby donor is judged by distance without expression-residual evidence. It
+removes slightly less count mass than expression beta 4 (19.41% versus 20.72%).
+Its unsupervised K-means silhouette rises from 0.2887 to 0.3641, yet ARI and NMI
+remain essentially unchanged and still do not beat raw expression. This is an
+important distinction: it creates more compact model-defined clusters without
+making them more biologically concordant with RCTD. Expression guidance at
+beta 4 therefore did not demonstrate a meaningful label-level advantage in
+this crop.
+
+### Expression-guided beta 2
+
+Lowering only the final intrinsic beta from 4 to 2 produces the clearest gain.
+Compared with raw expression:
+
+- ARI rises by 0.0471, from 0.2876 to 0.3347;
+- NMI rises by 0.0457, from 0.5658 to 0.6114;
+- 15-NN purity rises by 0.0339, from 0.7422 to 0.7761;
+- label silhouette rises by 0.0523, from 0.0511 to 0.1034.
+
+It also has the lowest reconstruction loss (185.00) and removes less count mass
+(17.65%) than any other serious crop variant. This supports the interpretation
+that beta 4 over-compressed the intrinsic embedding and that beta 2 preserved
+more cell-type signal while requiring less aggressive correction.
+
+There is a tradeoff: mean niche-dimension standard deviation falls from about
+0.206 in expression beta 4 to 0.049, and final niche KL falls from 0.779 to
+0.029. The beta-2 run's niche representation is therefore weak or partly
+collapsed. It is the best current **intrinsic cell-type embedding**, but it is
+not the strongest demonstration of niche representation learning.
+
+### Expression-guided beta 4 with stronger eta penalty
+
+Increasing `lambda_eta` from 0.01 to 0.05 modestly lowers estimated leakage and
+count removal relative to expression beta 4 (20.18% versus 20.72%), as intended.
+It does not improve reconstruction or RCTD agreement. ARI falls to 0.2616, while
+NMI and label silhouette remain below the raw baseline. The change is too small
+to solve beta-4 over-compression, and the worse ARI suggests that globally
+discouraging leakage is not by itself the required fix.
+
+### Why the raw baseline is repeated
+
+Every crop variant is compared with the same cells and same raw count matrix,
+so the raw baseline values are identical in the summary. This is deliberate:
+the changing values come from CASTLE's learned embedding, not from resampling or
+changing the reference labels.
+
+## Selected full-run result
+
+The beta-2 implementation was carried forward because it was the only crop
+variant that improved all four RCTD-agreement measures over raw expression. The
+full run contains 164,995 filtered cells and 313 genes. It removes 19.42% of
+total count mass, with median cell retention of 0.7831.
+
+The label comparison uses the same seed to select 30,000 of the 163,849 cells
+having RCTD labels and compares 17 cell types:
+
+| Representation | ARI | NMI | 15-NN purity | Label silhouette |
+|---|---:|---:|---:|---:|
+| Raw normalized 16D expression | 0.3295 | 0.5478 | 0.7240 | 0.0328 |
+| Full CASTLE beta-2 intrinsic | 0.4057 | 0.6031 | 0.7668 | 0.0966 |
+| Absolute improvement | +0.0763 | +0.0553 | +0.0428 | +0.0639 |
+
+Thus the full intrinsic embedding agrees more strongly with RCTD at both global
+cluster level (ARI/NMI) and local neighborhood/separation level (purity and
+label silhouette). The improvements are larger than in the crop for ARI and
+label silhouette. This could reflect the benefit of training on more cells and
+more examples of each population, but crop and full results are not a controlled
+single-variable comparison because MiniBatchKMeans and sampling are used for
+the full evaluation.
+
+The full run's internal K-means scores are silhouette 0.1942,
+Davies–Bouldin 1.5509, and Calinski–Harabasz 700.73 on a 5,000-cell sample.
+These establish that clusters exist in the latent geometry, but the RCTD-based
+metrics are the more relevant evidence that those clusters correspond to the
+reference cell-type structure.
+
+## What the current results do and do not establish
+
+The current evidence supports three specific statements:
+
+1. Lowering intrinsic beta from 4 to 2 materially improved preservation of
+   RCTD cell-type structure.
+2. On this dataset, expression-guided edge correction at beta 4 did not clearly
+   outperform geometry-only correction on label-level metrics.
+3. Stronger global eta regularization did not improve the embedding.
+
+It does not yet establish that CASTLE outperforms SPLIT or scVIVA. The present
+raw-versus-CASTLE comparison uses a custom 16-dimensional K-means benchmark.
+SPLIT's paper evaluation uses a broader scIB-style protocol and corrected-count
+representations. A fair method comparison must hold the cells, RCTD labels,
+normalization, PCA dimensionality, clustering algorithm, sampling, and excluded
+cell types constant for raw, SPLIT, CASTLE, and scVIVA.

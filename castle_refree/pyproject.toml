@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "castle-refree"
+version = "0.1.0"
+description = "Reference-free joint denoising and embedding for single-cell spatial transcriptomics"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26",
+  "scipy>=1.11",
+  "pandas>=2.0",
+  "PyYAML>=6.0",
+  "torch>=2.2",
+]
+
+[project.optional-dependencies]
+h5ad = ["anndata>=0.10"]
+test = ["pytest>=8.0"]
+
+[project.scripts]
+castle-refree = "castle_refree.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

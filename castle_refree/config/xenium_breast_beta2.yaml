@@ -1,0 +1,50 @@
+data:
+  input_dir: ../../data/castle_xenium_breast
+  output_dir: ../../results/castle_refree_xenium_breast_beta2
+  min_counts: 5
+  min_cells_per_gene: 10
+
+graph:
+  n_neighbors: 12
+  distance_quantile: 0.99
+  distance_scale: 0.0
+
+model:
+  hidden_dim: 96
+  intrinsic_dim: 16
+  niche_dim: 16
+  dropout: 0.05
+  contamination:
+    enabled: true
+    eta_max: 0.35
+    purify_steps: 2
+    expression_guided:
+      enabled: true
+      strength: 1.25
+      max_logit_shift: 1.5
+      projection_dim: 32
+      seed: 17
+
+loss:
+  beta_intrinsic_start: 1.0
+  beta_intrinsic_end: 2.0
+  beta_niche: 0.5
+  lambda_niche_sparse: 0.05
+  lambda_niche_reconstruction: 0.5
+  lambda_hsic: 0.01
+  lambda_eta: 0.01
+  lambda_library: 0.1
+
+train:
+  warmup_epochs: 5
+  contamination_epochs: 15
+  joint_epochs: 20
+  batch_size: 512
+  cache_batch_size: 2048
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  gradient_clip: 5.0
+  seed: 7
+  device: auto
+  num_threads: 0
+  checkpoint_every: 5

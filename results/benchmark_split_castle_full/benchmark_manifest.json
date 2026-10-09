@@ -1,0 +1,28 @@
+{
+  "protocol": "SPLIT/scib-metrics biological conservation",
+  "development_crop_excluded": true,
+  "tumour_labels_excluded": false,
+  "official_malignant_substring_filter_applied": true,
+  "evaluation_cells": 100000,
+  "evaluation_genes": 306,
+  "reference_types": 17,
+  "max_cells": 100000,
+  "silhouette_sample_cells": 10000,
+  "silhouette_sampling_deviation": "SPLIT computes O(n^2) silhouette on the full <=100k cohort; this CPU run uses one shared fixed sample for silhouette and isolated-label metrics only.",
+  "count_preprocessing": "normalize_total(target_sum=1e4), log1p, Scanpy PCA n_comps=50",
+  "native_castle_preprocessing": "none; exported 16D intrinsic posterior mean",
+  "versions": {
+    "numpy": "1.26.4",
+    "scipy": "1.16.1",
+    "pandas": "2.1.4",
+    "scikit-learn": "1.4.2",
+    "scanpy": "1.11.2",
+    "anndata": "0.12.0",
+    "scib-metrics": "0.5.5",
+    "jax": "0.4.35",
+    "jaxlib": "0.4.35",
+    "igraph": "0.11.9",
+    "pynndescent": "0.5.13"
+  },
+  "python": "3.12.14"
+}

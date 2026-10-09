@@ -1,0 +1,294 @@
+{
+  "raw_pca50": {
+    "cells": 86364,
+    "dimensions": 50,
+    "reference_types": 13,
+    "kmeans_clusters": 13,
+    "kmeans_ari": 0.2483116109260871,
+    "kmeans_nmi": 0.48810814172494055,
+    "leiden_clusters": 7,
+    "leiden_best_resolution": 0.4,
+    "leiden_ari": 0.3750891874540194,
+    "leiden_nmi": 0.5530494040002548,
+    "label_silhouette_rescaled": 0.5170836709439754,
+    "clisi": 0.9825571179389954,
+    "isolated_labels": 0.5287743806838989,
+    "label_calinski_harabasz": 3217.0348400430053,
+    "label_davies_bouldin": 3.293579950205491,
+    "kmeans_silhouette_unscaled_sample": 0.07891341298818588,
+    "kmeans_calinski_harabasz": 4510.807613461147,
+    "kmeans_davies_bouldin": 2.873993297436604,
+    "silhouette_sample_cells": 10000,
+    "leiden_resolution_candidates": [
+      {
+        "resolution": 0.2,
+        "nmi": 0.473243314836905,
+        "ari": 0.27842859018673055
+      },
+      {
+        "resolution": 0.4,
+        "nmi": 0.5530494040002548,
+        "ari": 0.3750891874540194
+      },
+      {
+        "resolution": 0.6000000000000001,
+        "nmi": 0.5342515336306425,
+        "ari": 0.35636882558451133
+      },
+      {
+        "resolution": 0.8,
+        "nmi": 0.5423200490666378,
+        "ari": 0.35172370724625684
+      },
+      {
+        "resolution": 1.0,
+        "nmi": 0.527270513130258,
+        "ari": 0.2734096808769038
+      },
+      {
+        "resolution": 1.2,
+        "nmi": 0.5427344790467599,
+        "ari": 0.2973878083560163
+      },
+      {
+        "resolution": 1.4000000000000001,
+        "nmi": 0.5365190430655316,
+        "ari": 0.28705589660023534
+      },
+      {
+        "resolution": 1.6,
+        "nmi": 0.5343324583105044,
+        "ari": 0.2718897043045603
+      },
+      {
+        "resolution": 1.8,
+        "nmi": 0.5338987760995545,
+        "ari": 0.2685986655902155
+      },
+      {
+        "resolution": 2.0,
+        "nmi": 0.5317944942342047,
+        "ari": 0.26385578616824806
+      }
+    ]
+  },
+  "split_pca50": {
+    "cells": 86364,
+    "dimensions": 50,
+    "reference_types": 13,
+    "kmeans_clusters": 13,
+    "kmeans_ari": 0.5274430303904771,
+    "kmeans_nmi": 0.7565414562552722,
+    "leiden_clusters": 8,
+    "leiden_best_resolution": 0.4,
+    "leiden_ari": 0.8797819867795563,
+    "leiden_nmi": 0.8682735464833693,
+    "label_silhouette_rescaled": 0.5376729853451252,
+    "clisi": 0.9994389613469442,
+    "isolated_labels": 0.5463321805000305,
+    "label_calinski_harabasz": 4618.444798178858,
+    "label_davies_bouldin": 2.7575424313359846,
+    "kmeans_silhouette_unscaled_sample": 0.09098085016012192,
+    "kmeans_calinski_harabasz": 5550.239521496113,
+    "kmeans_davies_bouldin": 2.7016160994677234,
+    "silhouette_sample_cells": 10000,
+    "leiden_resolution_candidates": [
+      {
+        "resolution": 0.2,
+        "nmi": 0.8128110617103028,
+        "ari": 0.7729186478091304
+      },
+      {
+        "resolution": 0.4,
+        "nmi": 0.8682735464833693,
+        "ari": 0.8797819867795563
+      },
+      {
+        "resolution": 0.6000000000000001,
+        "nmi": 0.8393581155098815,
+        "ari": 0.7623608733831141
+      },
+      {
+        "resolution": 0.8,
+        "nmi": 0.7978833385727075,
+        "ari": 0.5513081535473736
+      },
+      {
+        "resolution": 1.0,
+        "nmi": 0.781847545764464,
+        "ari": 0.5116728415003539
+      },
+      {
+        "resolution": 1.2,
+        "nmi": 0.7847781482907522,
+        "ari": 0.5115470044549479
+      },
+      {
+        "resolution": 1.4000000000000001,
+        "nmi": 0.7832799355564717,
+        "ari": 0.503647085703338
+      },
+      {
+        "resolution": 1.6,
+        "nmi": 0.7736176390482158,
+        "ari": 0.45865237166368494
+      },
+      {
+        "resolution": 1.8,
+        "nmi": 0.7609501799122408,
+        "ari": 0.42997188276436915
+      },
+      {
+        "resolution": 2.0,
+        "nmi": 0.7634615630691619,
+        "ari": 0.4290862220813612
+      }
+    ]
+  },
+  "castle_purified_pca50": {
+    "cells": 86364,
+    "dimensions": 50,
+    "reference_types": 13,
+    "kmeans_clusters": 13,
+    "kmeans_ari": 0.3090018490807126,
+    "kmeans_nmi": 0.5306905282684808,
+    "leiden_clusters": 13,
+    "leiden_best_resolution": 1.0,
+    "leiden_ari": 0.37465960707297263,
+    "leiden_nmi": 0.5631606471082609,
+    "label_silhouette_rescaled": 0.5183652024716139,
+    "clisi": 0.9862856368223826,
+    "isolated_labels": 0.5323922634124756,
+    "label_calinski_harabasz": 3522.238289821748,
+    "label_davies_bouldin": 3.1499741680307802,
+    "kmeans_silhouette_unscaled_sample": 0.09388390928506851,
+    "kmeans_calinski_harabasz": 5042.944278451295,
+    "kmeans_davies_bouldin": 2.580144812020322,
+    "silhouette_sample_cells": 10000,
+    "leiden_resolution_candidates": [
+      {
+        "resolution": 0.2,
+        "nmi": 0.5289933808519471,
+        "ari": 0.3449404655732069
+      },
+      {
+        "resolution": 0.4,
+        "nmi": 0.5599918943240488,
+        "ari": 0.38355183544515864
+      },
+      {
+        "resolution": 0.6000000000000001,
+        "nmi": 0.536848851512013,
+        "ari": 0.3717777485360651
+      },
+      {
+        "resolution": 0.8,
+        "nmi": 0.553954852195568,
+        "ari": 0.337863383183509
+      },
+      {
+        "resolution": 1.0,
+        "nmi": 0.5631606471082609,
+        "ari": 0.37465960707297263
+      },
+      {
+        "resolution": 1.2,
+        "nmi": 0.5319153620638933,
+        "ari": 0.30927820415189
+      },
+      {
+        "resolution": 1.4000000000000001,
+        "nmi": 0.5299681253025522,
+        "ari": 0.2560570066265719
+      },
+      {
+        "resolution": 1.6,
+        "nmi": 0.5346661748966555,
+        "ari": 0.25804553971156186
+      },
+      {
+        "resolution": 1.8,
+        "nmi": 0.5337943153843411,
+        "ari": 0.2544572483599424
+      },
+      {
+        "resolution": 2.0,
+        "nmi": 0.5265457347129746,
+        "ari": 0.23512708861745105
+      }
+    ]
+  },
+  "castle_intrinsic_z16": {
+    "cells": 86364,
+    "dimensions": 16,
+    "reference_types": 13,
+    "kmeans_clusters": 13,
+    "kmeans_ari": 0.35872500284344183,
+    "kmeans_nmi": 0.5814413556881582,
+    "leiden_clusters": 15,
+    "leiden_best_resolution": 0.6000000000000001,
+    "leiden_ari": 0.32646700447554927,
+    "leiden_nmi": 0.5629909594212651,
+    "label_silhouette_rescaled": 0.5565550960600376,
+    "clisi": 0.9935440719127655,
+    "isolated_labels": 0.6107912659645081,
+    "label_calinski_harabasz": 8198.259311639895,
+    "label_davies_bouldin": 1.606441850147469,
+    "kmeans_silhouette_unscaled_sample": 0.22372961044311523,
+    "kmeans_calinski_harabasz": 14916.14957343462,
+    "kmeans_davies_bouldin": 1.4965649377033863,
+    "silhouette_sample_cells": 10000,
+    "leiden_resolution_candidates": [
+      {
+        "resolution": 0.2,
+        "nmi": 0.5270592552082591,
+        "ari": 0.3162770273978757
+      },
+      {
+        "resolution": 0.4,
+        "nmi": 0.5618011501686616,
+        "ari": 0.38593127553035816
+      },
+      {
+        "resolution": 0.6000000000000001,
+        "nmi": 0.5629909594212651,
+        "ari": 0.32646700447554927
+      },
+      {
+        "resolution": 0.8,
+        "nmi": 0.5487414170018226,
+        "ari": 0.2861400360715812
+      },
+      {
+        "resolution": 1.0,
+        "nmi": 0.5308320948987357,
+        "ari": 0.23664444599246462
+      },
+      {
+        "resolution": 1.2,
+        "nmi": 0.5178770519996938,
+        "ari": 0.19747829004212833
+      },
+      {
+        "resolution": 1.4000000000000001,
+        "nmi": 0.5112623733536378,
+        "ari": 0.17612047808043152
+      },
+      {
+        "resolution": 1.6,
+        "nmi": 0.5117168551857694,
+        "ari": 0.1738979854561649
+      },
+      {
+        "resolution": 1.8,
+        "nmi": 0.5072920229501408,
+        "ari": 0.15891319606936294
+      },
+      {
+        "resolution": 2.0,
+        "nmi": 0.5060248926074453,
+        "ari": 0.1530828398856145
+      }
+    ]
+  }
+}

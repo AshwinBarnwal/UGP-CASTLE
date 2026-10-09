@@ -1,5 +1,21 @@
 # CASTLE-RefFree implementation, scripts, and results guide
 
+## SPLIT reproduction and comparison
+
+`castle_refree/R/run_split_full.R` runs the actual SPLIT purification used by
+the benchmark. It reads the precomputed RCTD weights and reference from
+`data/split_inputs_full.rds`, loads the cached Xenium counts, processes the
+dataset in resumable 25,000-cell batches, and combines the batches into
+`results/xenium_rep1_split_full_combined.rds`.
+
+`castle_refree/R/export_split_benchmark_counts.R` converts that combined SPLIT
+result into the sparse interchange files consumed by the Python benchmark.
+
+`castle_refree/scripts/benchmark_split_castle.py` compares raw-count PCA50,
+SPLIT PCA50, CASTLE's native intrinsic embedding, and CASTLE's niche embedding.
+The remaining benchmark plotting scripts generate the reported tables and
+figures.
+
 This document describes the executable scripts, package modules, configuration
 files, their inputs and outputs, and how they fit together. Paths are relative
 to the repository root.

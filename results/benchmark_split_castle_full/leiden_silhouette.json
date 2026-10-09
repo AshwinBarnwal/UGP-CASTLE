@@ -1,0 +1,22 @@
+{
+  "raw_pca50": {
+    "silhouette": 0.08895386010408401,
+    "clusters": 10,
+    "sample_cells": 10000
+  },
+  "split_pca50": {
+    "silhouette": 0.12979963421821594,
+    "clusters": 8,
+    "sample_cells": 10000
+  },
+  "castle_purified_pca50": {
+    "silhouette": 0.09437611699104309,
+    "clusters": 10,
+    "sample_cells": 10000
+  },
+  "castle_intrinsic_z16": {
+    "silhouette": 0.19699957966804504,
+    "clusters": 16,
+    "sample_cells": 10000
+  }
+}

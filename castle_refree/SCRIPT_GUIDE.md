@@ -21,6 +21,16 @@ to the repository root.
 6. `summarize_crop_ablations.py` combines the crop experiments into one table
    and comparison figure.
 
+The separate scVIVA path reads the refined ProSeg H5AD directly:
+`scripts/run_scviva_proseg.py` trains and saves its latent/model/plots, then
+`scripts/evaluate_scviva_proseg.py` runs the K-means and Leiden label comparison.
+Install `requirements-scviva.txt` in `.venv-scviva`; do not install scVIVA into
+the CASTLE environment. See the README section “Run scVIVA directly on the
+refined ProSeg H5AD” for the single-line setup and run commands. Because the
+scVIVA tutorial uses `cell_type` when constructing neighborhood features, the
+subsequent ARI/NMI agreement with `cell_type` is label-informed rather than an
+independent held-out evaluation.
+
 ## Data preparation scripts
 
 ### `castle_refree/R/export_xenium_breast.R`
@@ -52,6 +62,24 @@ Output bundle:
 - `cells.tsv`: cell identifiers in matrix-column order.
 - `spatial.csv`: cell identifier, coordinates, and area.
 - `manifest.R`: provenance and dimensions.
+
+### `castle_refree/scripts/export_h5ad.py`
+
+Purpose: convert an AnnData H5AD file into the same portable bundle consumed by
+the existing CASTLE loader.
+
+Defaults for the refined ProSeg breast file:
+
+- expression source: `layers/counts` (the raw count layer);
+- coordinates: `obs.x` and `obs.y`;
+- evaluation annotation: `obs.cell_type`;
+- cell area: `1` for each cell because this H5AD has no area column.
+
+The script reads only the selected sparse expression matrix and the requested
+metadata columns. It writes `counts.mtx`, `genes.tsv`, `cells.tsv`,
+`spatial.csv`, an evaluation-only `cell_annotations.csv`, and `manifest.json`.
+It checks that the selected matrix dimensions match the H5AD and, when present,
+that count row sums match `obs.n_counts`.
 
 ### `castle_refree/R/export_full_rctd_labels.R`
 
@@ -114,6 +142,8 @@ Each YAML file is a complete experiment specification:
 - `xenium_breast_15000_eta_reg.yaml`: crop with a stronger leakage penalty
   (`lambda_eta = 0.05`).
 - `xenium_breast_15000_smoke.yaml`: short five-epoch integration run.
+- `xenium_proseg_breast_beta2.yaml`: refined ProSeg H5AD bundle using the
+  selected full-data beta-2 model settings and its own result directory.
 
 The geometry-only crop uses the appropriate crop YAML plus the
 `--geometry-only` command-line switch, rather than a separate YAML file.
@@ -264,6 +294,30 @@ It uses MiniBatchKMeans rather than standard K-means and uses 10 starts, but
 otherwise calculates the same ARI, NMI, 15-NN purity, and label-silhouette
 statistics against a 16-component raw-expression baseline. It writes
 `rctd_label_embedding_metrics.json`.
+
+### `castle_refree/scripts/evaluate_proseg_labels.py`
+
+Purpose: follow the Janesick label-evaluation protocol using the H5AD
+`cell_type` annotation from `cell_annotations.csv` as ground truth. It excludes
+`Unlabeled`/`Unlabelled` and blank labels before any clustering, scoring, or
+plotting, then runs K-means with K=17 and sweeps Leiden resolutions from 0.2
+through 2.0 in 0.2 steps. It reports the best ARI resolution, best NMI
+resolution, and ARI/NMI paired at the best-NMI resolution. It also writes only
+the matched labeled cells to the output CSVs and UMAP comparisons. Install the
+optional `evaluation` extra for scIB-metrics, igraph, UMAP, matplotlib, and
+scikit-learn.
+
+### `castle_refree/src/castle_refree/evaluate_split_proseg_labels.py`
+
+Purpose: reuse the existing exported SPLIT purified counts and compare their
+PCA/clustering results to the ProSeg H5AD `cell_type` labels. It maps synthetic
+H5AD `query_*` names to original SPLIT barcodes by mutual nearest spatial
+coordinates, defaults to a maximum distance of 10 coordinate units, and writes
+the candidate mapping and distances for review. It limits evaluation to cells
+present in the ProSeg CASTLE run, excludes `Unlabeled`/blank labels, and computes
+K-means K=17 plus Leiden resolutions 0.2–2.0. The coordinate match is
+approximate because the two datasets have different cell identifiers and
+segmentations.
 
 ### `castle_refree/scripts/summarize_crop_ablations.py`
 

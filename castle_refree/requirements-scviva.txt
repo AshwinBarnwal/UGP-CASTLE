@@ -1,0 +1,6 @@
+# Install only into the dedicated .venv-scviva environment.
+scviva-tools[tutorials]
+scanpy
+scib-metrics
+igraph
+umap-learn

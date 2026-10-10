@@ -10,6 +10,7 @@ import numpy as np
 import torch
 from scipy import sparse
 from torch import Tensor
+from tqdm.auto import tqdm
 
 from .config import CastleConfig
 from .data import SpatialCountData
@@ -273,14 +274,25 @@ class CastleTrainer:
         }
         ids_all = np.arange(self.data.n_cells)
         self.refresh_cache()
+        batches_per_epoch = (self.data.n_cells + self.cfg.train.batch_size - 1) // self.cfg.train.batch_size
+        remaining_epochs = sum(epochs - completed[phase] for phase, epochs in phases)
+        total_epochs = sum(epochs for _, epochs in phases)
+        progress = tqdm(
+            total=batches_per_epoch * remaining_epochs,
+            desc="Training",
+            unit="batch",
+            dynamic_ncols=True,
+        )
         for phase, epochs in phases:
             for _ in range(completed[phase], epochs):
+                progress.set_description(f"{phase} epoch {global_epoch + 1}/{total_epochs}")
                 self.model.train()
                 np.random.shuffle(ids_all)
                 sums: dict[str, float] = {}
                 batches = 0
                 beta = self._beta_intrinsic(joint_epoch) if phase == "joint" else self.cfg.loss.beta_intrinsic_start
-                for start in range(0, self.data.n_cells, self.cfg.train.batch_size):
+                batch_starts = range(0, self.data.n_cells, self.cfg.train.batch_size)
+                for start in batch_starts:
                     ids = ids_all[start : start + self.cfg.train.batch_size]
                     tensors = self._batch_tensors(ids)
                     self.optimizer.zero_grad(set_to_none=True)
@@ -293,6 +305,7 @@ class CastleTrainer:
                     for key, value in result.metrics.items():
                         sums[key] = sums.get(key, 0.0) + value
                     batches += 1
+                    progress.update(1)
                 global_epoch += 1
                 if phase == "joint":
                     joint_epoch += 1
@@ -307,6 +320,7 @@ class CastleTrainer:
                 self.refresh_cache()
                 if global_epoch % self.cfg.train.checkpoint_every == 0:
                     self.save_checkpoint(Path(self.cfg.data.output_dir) / "checkpoint.pt")
+        progress.close()
         return self
 
     def save_checkpoint(self, path: Path) -> None:

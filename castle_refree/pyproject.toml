@@ -13,10 +13,18 @@ dependencies = [
   "pandas>=2.0",
   "PyYAML>=6.0",
   "torch>=2.2",
+  "tqdm>=4.66",
 ]
 
 [project.optional-dependencies]
 h5ad = ["anndata>=0.10"]
+evaluation = [
+  "scikit-learn",
+  "scib-metrics",
+  "igraph",
+  "umap-learn",
+  "matplotlib",
+]
 test = ["pytest>=8.0"]
 
 [project.scripts]

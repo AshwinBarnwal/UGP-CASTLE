@@ -103,6 +103,146 @@ source("castle_refree/R/export_xenium_breast.R")
 This writes a portable bundle to `data/castle_xenium_breast`. It does not
 download a dataset and does not read the Chromium reference.
 
+## Refined ProSeg breast Xenium input
+
+The refined H5AD can use the same CASTLE training path. Export its raw
+`layers/counts` matrix and the refined `x`/`y` coordinates into the portable
+bundle format. The H5AD `cell_type` annotation is saved for evaluation only and
+is never supplied to the trainer. Cell areas are absent from this H5AD, so the
+exporter records and uses the existing area-of-1 fallback.
+
+From the repository root, install the H5AD extra if needed and export:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -e ".\castle_refree[h5ad,evaluation]"
+.\.venv\Scripts\python.exe .\castle_refree\scripts\export_h5ad.py `
+  .\adata_for_tuto_s1.h5ad `
+  --output-dir .\data\castle_xenium_proseg_breast
+```
+
+Dry-run, train, analyze, and evaluate the beta-2 experiment:
+
+```powershell
+.\.venv\Scripts\castle-refree.exe --config .\castle_refree\config\xenium_proseg_breast_beta2.yaml --dry-run
+.\.venv\Scripts\castle-refree.exe --config .\castle_refree\config\xenium_proseg_breast_beta2.yaml
+.\.venv\Scripts\python.exe .\castle_refree\scripts\analyze_full.py --input .\data\castle_xenium_proseg_breast --results .\results\castle_refree_xenium_proseg_breast_beta2 --clusters 18
+.\.venv\Scripts\python.exe .\castle_refree\scripts\evaluate_proseg_labels.py --input .\data\castle_xenium_proseg_breast --results .\results\castle_refree_xenium_proseg_breast_beta2
+```
+
+The exporter reads only the selected sparse count layer rather than materializing
+all the dense matrices also stored in the H5AD. The output directory is separate
+from the original Xenium bundle and existing experiments.
+
+## Evaluate the existing SPLIT result against ProSeg labels
+
+This reuses the saved SPLIT result; it does not rerun SPLIT. Export its
+`purified_counts` if the Python sparse export does not already exist:
+
+```powershell
+Rscript .\castle_refree\R\export_split_matrix_for_python.R
+```
+
+The H5AD has synthetic `query_*` cell names, while the SPLIT output has original
+numeric Xenium barcodes. The ProSeg evaluator matches cells through mutual
+nearest spatial coordinates using the original Xenium spatial table. It keeps
+pairs within 10 coordinate units by default, writes the matched IDs and
+distances for review, excludes `Unlabeled`/blank labels, and evaluates the
+remaining 17 classes:
+
+```powershell
+.\.venv\Scripts\python.exe .\castle_refree\src\castle_refree\evaluate_split_proseg_labels.py
+```
+
+Outputs go to `results/split_proseg_evaluation_python/`. Set
+`--max-coordinate-distance` to change the matching radius. Review
+`spatial_cell_matches.csv` and the distance summary because this mapping across
+different cell segmentations is approximate.
+
+## Run scVIVA directly on the refined ProSeg H5AD
+
+The scVIVA path reads `adata_for_tuto_s1.h5ad` directly and does not use the
+CASTLE MatrixMarket export. Its dedicated environment keeps scVIVA dependencies
+out of the CASTLE environment. Use Python 3.13 (or another version supported by
+the installed scVIVA release, Python 3.12 or newer per its installation guide):
+
+```powershell
+.\.venv\Scripts\python.exe -m venv .venv-scviva
+```
+
+```powershell
+.\.venv-scviva\Scripts\python.exe -m pip install --upgrade pip
+```
+
+```powershell
+.\.venv-scviva\Scripts\python.exe -m pip install -r .\castle_refree\requirements-scviva.txt
+```
+
+Train with the tutorial's data keys and settings (counts layer, sample batch,
+cell_type labels, spatial coordinates, X_scANVI embedding, k=20, up to 600
+epochs, batch size 512, and learning rate 5e-4):
+
+```powershell
+.\.venv-scviva\Scripts\python.exe .\castle_refree\scripts\run_scviva_proseg.py
+```
+
+Evaluate the saved `X_scVIVA` latent after excluding `Unlabeled`/`Unlabelled` and
+blank labels, using K-means K=17 and Leiden resolutions 0.2 through 2.0 in 0.2
+increments:
+
+```powershell
+.\.venv-scviva\Scripts\python.exe .\castle_refree\scripts\evaluate_scviva_proseg.py
+```
+
+The run writes `model/`, `adata_scviva.h5ad` (including `obsm['X_scVIVA']`),
+`training_history.csv`, `run_metadata.json`, and the cell-type UMAP under
+`results/scviva_xenium_proseg_breast/`. Evaluation outputs, including the full
+Leiden sweep and best ARI/NMI summaries, go under its `label_evaluation/`
+subdirectory. scVIVA uses `cell_type` to construct neighborhood features, so
+ARI/NMI against those same labels are label-informed descriptive comparisons,
+not independent held-out scores.
+
+## Run unsupervised scVI on the refined ProSeg breast H5AD
+
+This separate workflow trains standard scVI directly from the H5AD raw-count
+layer. It does not use `cell_type`, `spatial`, or `X_scANVI` as model inputs.
+`cell_type` remains in the saved H5AD for evaluation and plots. The first run
+uses all 313 genes, a 10-dimensional latent, ZINB likelihood, 512-cell batches,
+and early stopping within a 200-epoch maximum. The `sample` column is registered
+for batch correction only when it contains at least two categories.
+
+Create a separate environment (scvi-tools currently supports Python 3.12–3.14):
+
+```powershell
+.\.venv\Scripts\python.exe -m venv .venv-scvi
+```
+
+```powershell
+.\.venv-scvi\Scripts\python.exe -m pip install --upgrade pip
+```
+
+```powershell
+.\.venv-scvi\Scripts\python.exe -m pip install -r .\castle_refree\requirements-scvi.txt
+```
+
+Train scVI and save its latent as `obsm['X_scVI']`:
+
+```powershell
+.\.venv-scvi\Scripts\python.exe .\castle_refree\scripts\run_scvi_proseg.py
+```
+
+Evaluate only labeled cells with K-means K=17 and Leiden resolutions 0.2 through
+2.0 in 0.2 increments:
+
+```powershell
+.\.venv-scvi\Scripts\python.exe .\castle_refree\scripts\evaluate_scvi_proseg.py
+```
+
+Training outputs go to `results/scvi_xenium_proseg_breast/`; evaluation outputs,
+including best-ARI and best-NMI Leiden UMAP comparisons, go to its
+`label_evaluation/` subdirectory. The evaluator excludes blank and
+`Unlabeled`/`Unlabelled` labels, but scVI trains on all cells without using those
+labels. Its ARI/NMI scores are therefore independent of label input to training.
+
 If you instead want to export a saved SpatialExperiment:
 
 ```r

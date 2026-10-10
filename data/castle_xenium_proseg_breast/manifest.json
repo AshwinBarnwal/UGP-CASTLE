@@ -1,0 +1,15 @@
+{
+  "source_file": "adata_for_tuto_s1.h5ad",
+  "format": "AnnData H5AD",
+  "count_layer": "counts",
+  "cells": 117305,
+  "genes": 313,
+  "coordinates": [
+    "x",
+    "y"
+  ],
+  "area": "not present in source; exported as 1 for every cell",
+  "evaluation_annotation": "cell_type",
+  "annotation_used_for_training": false,
+  "negative_controls": false
+}

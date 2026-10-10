@@ -1,0 +1,15 @@
+{
+  "input_h5ad": "C:\\Users\\rayar\\Documents\\IIT Kanpur Academics\\UGPs\\UGP-2 (Hamim Zafar)\\UGP-CASTLE\\adata_for_tuto_s1.h5ad",
+  "sample_key": "sample",
+  "labels_key": "cell_type",
+  "cell_coordinates_key": "spatial",
+  "expression_embedding_key": "X_scANVI",
+  "counts_layer": "counts",
+  "k_nn": 20,
+  "max_epochs": 600,
+  "batch_size": 512,
+  "learning_rate": 0.0005,
+  "seed": 0,
+  "cell_type_used_to_construct_scVIVA_neighborhood_features": true,
+  "evaluation_note": "ARI/NMI against cell_type are label-informed descriptive metrics; cell_type is also used in scVIVA neighborhood preprocessing."
+}

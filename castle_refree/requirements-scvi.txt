@@ -1,0 +1,6 @@
+# Install into the dedicated .venv-scvi environment.
+scvi-tools
+scanpy
+scib-metrics
+igraph
+umap-learn

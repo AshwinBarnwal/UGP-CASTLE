@@ -1,0 +1,18 @@
+{
+  "input_h5ad": "C:\\Users\\rayar\\Documents\\IIT Kanpur Academics\\UGPs\\UGP-2 (Hamim Zafar)\\UGP-CASTLE\\adata_for_tuto_s1.h5ad",
+  "model_dir": "C:\\Users\\rayar\\Documents\\IIT Kanpur Academics\\UGPs\\UGP-2 (Hamim Zafar)\\UGP-CASTLE\\results\\scvi_xenium_proseg_breast\\model",
+  "output_h5ad": "C:\\Users\\rayar\\Documents\\IIT Kanpur Academics\\UGPs\\UGP-2 (Hamim Zafar)\\UGP-CASTLE\\results\\scvi_xenium_proseg_breast\\adata_scvi.h5ad",
+  "count_layer": "counts",
+  "batch_key": null,
+  "batch_correction": false,
+  "labels_used_for_training": false,
+  "label_column_reserved_for_evaluation": "cell_type",
+  "n_obs": 117305,
+  "n_vars": 313,
+  "n_latent": 10,
+  "latent_key": "X_scVI",
+  "latent_recomputed_from_saved_model": true,
+  "training_rerun": false,
+  "umap_neighbors": 30,
+  "seed": 42
+}

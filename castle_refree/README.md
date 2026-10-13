@@ -201,6 +201,12 @@ subdirectory. scVIVA uses `cell_type` to construct neighborhood features, so
 ARI/NMI against those same labels are label-informed descriptive comparisons,
 not independent held-out scores.
 
+All ProSeg evaluators report silhouette for the K-means result, each Leiden
+resolution, and the ground-truth cell-type grouping. By default, silhouette is
+estimated on the same reproducible 2,000-cell sample for each clustering to
+avoid the quadratic cost of computing it across every cell. Change the sample
+with `--silhouette-sample-size`.
+
 ## Run unsupervised scVI on the refined ProSeg breast H5AD
 
 This separate workflow trains standard scVI directly from the H5AD raw-count
@@ -242,6 +248,10 @@ including best-ARI and best-NMI Leiden UMAP comparisons, go to its
 `label_evaluation/` subdirectory. The evaluator excludes blank and
 `Unlabeled`/`Unlabelled` labels, but scVI trains on all cells without using those
 labels. Its ARI/NMI scores are therefore independent of label input to training.
+
+Silhouette scores are also reported for K-means, every Leiden resolution, and
+the labeled cell-type grouping, using the same sampled calculation described
+above.
 
 If you instead want to export a saved SpatialExperiment:
 

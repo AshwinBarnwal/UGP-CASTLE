@@ -31,13 +31,31 @@ from scipy.spatial import cKDTree
 from scib_metrics.nearest_neighbors import pynndescent
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
-from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
+from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score, silhouette_score
 from tqdm import tqdm
 
 
 ROOT = Path(__file__).resolve().parents[3]
 N_CELL_TYPES = 17
 UNLABELED_NAMES = {"unlabeled", "unlabelled"}
+DEFAULT_SILHOUETTE_SAMPLE_SIZE = 2000
+
+
+def sampled_silhouette(X: np.ndarray, labels: np.ndarray, sample_size: int, seed: int) -> float:
+    """Estimate Euclidean silhouette on a reproducible sample to avoid quadratic full-data cost."""
+    labels = np.asarray(labels)
+    sample_size = min(sample_size, len(labels))
+    n_all_clusters = np.unique(labels).size
+    if n_all_clusters < 2 or n_all_clusters >= len(labels):
+        return float("nan")
+    if sample_size == len(labels):
+        return float(silhouette_score(X, labels))
+    indices = np.random.default_rng(seed).choice(len(labels), size=sample_size, replace=False)
+    sampled_labels = labels[indices]
+    n_clusters = np.unique(sampled_labels).size
+    if n_clusters < 2 or n_clusters >= sample_size:
+        return float("nan")
+    return float(silhouette_score(X[indices], sampled_labels))
 
 
 def parse_args() -> argparse.Namespace:
@@ -72,6 +90,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--leiden-neighbors", type=int, default=15)
     parser.add_argument("--umap-neighbors", type=int, default=15)
     parser.add_argument("--umap-min-dist", type=float, default=0.3)
+    parser.add_argument("--silhouette-sample-size", type=int, default=DEFAULT_SILHOUETTE_SAMPLE_SIZE)
     parser.add_argument("--scale-factor", type=float, default=10_000)
     return parser.parse_args()
 
@@ -124,6 +143,8 @@ def save_umap_pair(path: Path, coordinates: np.ndarray, predicted: np.ndarray, t
 
 def main() -> None:
     args = parse_args()
+    if args.silhouette_sample_size < 2:
+        raise ValueError("--silhouette-sample-size must be at least 2.")
     for path in (args.input_h5ad, args.split_spatial, args.castle_cells):
         if not path.exists():
             raise FileNotFoundError(path)
@@ -233,6 +254,8 @@ def main() -> None:
 
     print("[7/9] Running K-means and building the Leiden graph...", flush=True)
     kmeans = KMeans(n_clusters=N_CELL_TYPES, random_state=args.seed, n_init=10).fit_predict(X)
+    kmeans_silhouette = sampled_silhouette(X, kmeans, args.silhouette_sample_size, args.seed)
+    cell_type_silhouette = sampled_silhouette(X, truth, args.silhouette_sample_size, args.seed)
     neighbors = pynndescent(X, n_neighbors=args.leiden_neighbors, random_state=args.seed)
     resolution_rows: list[dict[str, float | int]] = []
     leiden_by_resolution: dict[float, np.ndarray] = {}
@@ -252,11 +275,15 @@ def main() -> None:
                 "n_clusters": int(pd.Series(predicted).nunique()),
                 "ARI": float(adjusted_rand_score(truth, predicted)),
                 "NMI": float(normalized_mutual_info_score(truth, predicted, average_method="arithmetic")),
+                "silhouette": sampled_silhouette(
+                    X, predicted, args.silhouette_sample_size, args.seed
+                ),
             }
         )
     resolution_metrics = pd.DataFrame(resolution_rows)
     best_ari = resolution_metrics.loc[resolution_metrics["ARI"].idxmax()]
     best_nmi = resolution_metrics.loc[resolution_metrics["NMI"].idxmax()]
+    best_silhouette = resolution_metrics.loc[resolution_metrics["silhouette"].idxmax()]
     best_nmi_resolution = float(best_nmi["resolution"])
 
     print("[8/9] Computing UMAP and saving metrics/plots...", flush=True)
@@ -282,14 +309,21 @@ def main() -> None:
         "n_ground_truth_classes": N_CELL_TYPES,
         "n_genes_after_qc": int(gene_keep.sum()),
         "n_pcs": int(n_pcs),
+        "silhouette_sample_size": min(args.silhouette_sample_size, len(truth)),
+        "cell_type_silhouette": cell_type_silhouette,
         "kmeans_K": N_CELL_TYPES,
         "kmeans_ARI": float(adjusted_rand_score(truth, kmeans)),
         "kmeans_NMI": float(normalized_mutual_info_score(truth, kmeans, average_method="arithmetic")),
+        "kmeans_silhouette": kmeans_silhouette,
         "leiden_neighbors": args.leiden_neighbors,
         "leiden_best_ARI": float(best_ari["ARI"]),
         "leiden_best_ARI_resolution": float(best_ari["resolution"]),
         "leiden_best_NMI": float(best_nmi["NMI"]),
         "leiden_best_NMI_resolution": best_nmi_resolution,
+        "leiden_silhouette_at_best_ARI_resolution": float(best_ari["silhouette"]),
+        "leiden_silhouette_at_best_NMI_resolution": float(best_nmi["silhouette"]),
+        "leiden_best_silhouette": float(best_silhouette["silhouette"]),
+        "leiden_best_silhouette_resolution": float(best_silhouette["resolution"]),
         "leiden_ARI_at_best_NMI_resolution": float(best_nmi["ARI"]),
         "leiden_NMI_at_best_NMI_resolution": float(best_nmi["NMI"]),
         "umap_neighbors": args.umap_neighbors,
@@ -314,8 +348,19 @@ def main() -> None:
     print(f"Matched labeled cells: {len(mapping):,} (K={N_CELL_TYPES}, unlabeled excluded)")
     print(f"Coordinate distance median / p95: {distances.median():.3f} / {distances.quantile(0.95):.3f}")
     print(f"K-means ARI/NMI: {metrics['kmeans_ARI']:.6f} / {metrics['kmeans_NMI']:.6f}")
+    print(f"K-means silhouette: {metrics['kmeans_silhouette']:.6f}")
+    print(f"Cell-type silhouette: {metrics['cell_type_silhouette']:.6f}")
     print(f"Best Leiden ARI: {metrics['leiden_best_ARI']:.6f} at {metrics['leiden_best_ARI_resolution']:.1f}")
     print(f"Best Leiden NMI: {metrics['leiden_best_NMI']:.6f} at {best_nmi_resolution:.1f}")
+    print(
+        f"Leiden silhouette at best-NMI resolution: "
+        f"{metrics['leiden_silhouette_at_best_NMI_resolution']:.6f}"
+    )
+    print(
+        f"Best Leiden silhouette: {metrics['leiden_best_silhouette']:.6f} "
+        f"at {metrics['leiden_best_silhouette_resolution']:.1f} "
+        f"(sample size {metrics['silhouette_sample_size']})"
+    )
     print(f"Saved results to {args.output.resolve()}")
 
 

@@ -19,8 +19,28 @@ from matplotlib.lines import Line2D
 from scib_metrics.nearest_neighbors import pynndescent
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
-from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
+from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score, silhouette_score
 from tqdm import tqdm
+
+
+DEFAULT_SILHOUETTE_SAMPLE_SIZE = 2000
+
+
+def sampled_silhouette(X, labels, sample_size, seed):
+    """Estimate Euclidean silhouette on a reproducible sample to avoid quadratic full-data cost."""
+    labels = np.asarray(labels)
+    n_all_clusters = np.unique(labels).size
+    if n_all_clusters < 2 or n_all_clusters >= len(labels):
+        return float("nan")
+    sample_size = min(sample_size, len(labels))
+    if sample_size == len(labels):
+        return float(silhouette_score(X, labels))
+    indices = np.random.default_rng(seed).choice(len(labels), size=sample_size, replace=False)
+    sampled_labels = labels[indices]
+    n_clusters = np.unique(sampled_labels).size
+    if n_clusters < 2 or n_clusters >= sample_size:
+        return float("nan")
+    return float(silhouette_score(X[indices], sampled_labels))
 
 
 def parse_args():
@@ -44,6 +64,7 @@ def parse_args():
     parser.add_argument("--umap-neighbors", type=int, default=15)
     parser.add_argument("--umap-min-dist", type=float, default=0.3)
     parser.add_argument("--scale-factor", type=float, default=10_000)
+    parser.add_argument("--silhouette-sample-size", type=int, default=DEFAULT_SILHOUETTE_SAMPLE_SIZE)
     return parser.parse_args()
 
 
@@ -102,6 +123,8 @@ def save_umap_pair(path, coordinates, predicted, truth, title):
 
 def main():
     args = parse_args()
+    if args.silhouette_sample_size < 2:
+        raise ValueError("--silhouette-sample-size must be at least 2.")
     root = args.project_root.resolve()
     export_dir = (args.export_dir or root / "results" / "split_janesick_python_export").resolve()
     labels_path = (args.labels or root / "data" / "xenium_r1_supervised_labels.csv").resolve()
@@ -186,6 +209,8 @@ def main():
 
     print("[6/9] Running K-means and building the CASTLE PyNNDescent graph...", flush=True)
     kmeans = KMeans(n_clusters=target_k, random_state=args.seed, n_init=10).fit_predict(X)
+    kmeans_silhouette = sampled_silhouette(X, kmeans, args.silhouette_sample_size, args.seed)
+    cell_type_silhouette = sampled_silhouette(X, truth, args.silhouette_sample_size, args.seed)
     neighbors = pynndescent(
         X,
         n_neighbors=args.leiden_neighbors,
@@ -216,10 +241,14 @@ def main():
             "NMI": float(normalized_mutual_info_score(
                 truth, predicted, average_method="arithmetic"
             )),
+            "silhouette": sampled_silhouette(
+                X, predicted, args.silhouette_sample_size, args.seed
+            ),
         })
     resolution_metrics = pd.DataFrame(resolution_rows)
     best_ari_row = resolution_metrics.loc[resolution_metrics["ARI"].idxmax()]
     best_nmi_row = resolution_metrics.loc[resolution_metrics["NMI"].idxmax()]
+    best_silhouette_row = resolution_metrics.loc[resolution_metrics["silhouette"].idxmax()]
     best_ari_resolution = float(best_ari_row["resolution"])
     best_nmi_resolution = float(best_nmi_row["resolution"])
 
@@ -264,13 +293,20 @@ def main():
         "leiden_neighbors": args.leiden_neighbors,
         "umap_neighbors": args.umap_neighbors,
         "umap_min_dist": args.umap_min_dist,
+        "silhouette_sample_size": min(args.silhouette_sample_size, len(truth)),
+        "cell_type_silhouette": cell_type_silhouette,
         "seed": args.seed,
         "kmeans_ARI": adjusted_rand_score(truth, kmeans),
         "kmeans_NMI": normalized_mutual_info_score(truth, kmeans, average_method="arithmetic"),
+        "kmeans_silhouette": kmeans_silhouette,
         "leiden_best_ARI": float(best_ari_row["ARI"]),
         "leiden_best_ARI_resolution": best_ari_resolution,
         "leiden_best_NMI": float(best_nmi_row["NMI"]),
         "leiden_best_NMI_resolution": best_nmi_resolution,
+        "leiden_silhouette_at_best_ARI_resolution": float(best_ari_row["silhouette"]),
+        "leiden_silhouette_at_best_NMI_resolution": float(best_nmi_row["silhouette"]),
+        "leiden_best_silhouette": float(best_silhouette_row["silhouette"]),
+        "leiden_best_silhouette_resolution": float(best_silhouette_row["resolution"]),
         "leiden_ARI_at_best_NMI_resolution": float(best_nmi_row["ARI"]),
         "leiden_NMI_at_best_NMI_resolution": float(best_nmi_row["NMI"]),
     }
@@ -293,6 +329,8 @@ def main():
     print(f"Labeled cells shared after QC: {len(shared):,}")
     print(f"Genes / PCs used: {int(gene_keep.sum())} / {n_pcs}")
     print(f"K-means ARI/NMI: {metrics['kmeans_ARI']:.6f} / {metrics['kmeans_NMI']:.6f}")
+    print(f"K-means silhouette: {metrics['kmeans_silhouette']:.6f}")
+    print(f"Cell-type silhouette: {metrics['cell_type_silhouette']:.6f}")
     print(
         "Best Leiden ARI: "
         f"{metrics['leiden_best_ARI']:.6f} at resolution {best_ari_resolution:.1f}"
@@ -300,6 +338,16 @@ def main():
     print(
         "Best Leiden NMI: "
         f"{metrics['leiden_best_NMI']:.6f} at resolution {best_nmi_resolution:.1f}"
+    )
+    print(
+        "Leiden silhouette at best-NMI resolution: "
+        f"{metrics['leiden_silhouette_at_best_NMI_resolution']:.6f}"
+    )
+    print(
+        "Best Leiden silhouette: "
+        f"{metrics['leiden_best_silhouette']:.6f} at resolution "
+        f"{metrics['leiden_best_silhouette_resolution']:.1f} "
+        f"(sample size {metrics['silhouette_sample_size']})"
     )
     print(f"Saved results to: {output_dir}")
 

@@ -124,10 +124,20 @@ def main() -> None:
 
     model.save(str(args.output / "model"), overwrite=True, save_anndata=False)
     history = model.history
-    if isinstance(history, pd.DataFrame):
-        history.to_csv(args.output / "training_history.csv")
-    elif history is not None:
-        pd.DataFrame(history).to_csv(args.output / "training_history.csv", index=False)
+    try:
+        if isinstance(history, pd.DataFrame):
+            history.to_csv(args.output / "training_history.csv")
+        elif history is not None:
+            pd.DataFrame(history).to_csv(args.output / "training_history.csv", index=False)
+    except (TypeError, ValueError) as exc:
+        # Do not lose the latent/H5AD/UMAP outputs if scvi-tools changes the
+        # shape/type of its in-memory history object between versions.
+        note = (
+            "scVI training finished and the model was saved, but training_history.csv "
+            f"could not be serialized: {type(exc).__name__}: {exc}\n"
+        )
+        (args.output / "training_history_unavailable.txt").write_text(note, encoding="utf-8")
+        print(note.strip())
 
     print("Computing UMAP from X_scVI for visualization...")
     sc.pp.neighbors(adata, use_rep="X_scVI", n_neighbors=30, random_state=args.seed)

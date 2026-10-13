@@ -45,7 +45,23 @@ the CASTLE environment. See the README section “Run scVIVA directly on the
 refined ProSeg H5AD” for the single-line setup and run commands. Because the
 scVIVA tutorial uses `cell_type` when constructing neighborhood features, the
 subsequent ARI/NMI agreement with `cell_type` is label-informed rather than an
-independent held-out evaluation.
+independent held-out evaluation. Its evaluator also reports silhouette for
+K-means, each Leiden resolution, and the ground-truth grouping on a reproducible
+2,000-cell sample by default.
+
+The separate unsupervised scVI path is implemented by
+`scripts/run_scvi_proseg.py` and `scripts/evaluate_scvi_proseg.py`. It trains
+from the H5AD raw count layer without using `cell_type`, spatial coordinates,
+or `X_scANVI`; the evaluator reports K-means/Leiden and ground-truth silhouette
+scores alongside ARI/NMI. The CASTLE and SPLIT ProSeg evaluators use the same
+sampled-silhouette protocol. Set `--silhouette-sample-size` to change the
+default sample size; if the dataset is smaller, all evaluated cells are used.
+
+The Janesick label evaluators,
+`src/castle_refree/evaluate_janesick_labels.py` and
+`src/castle_refree/evaluate_split_janesick_labels.py`, report the same sampled
+silhouette metrics for K-means, every Leiden resolution, and the ground-truth
+grouping. Each accepts `--silhouette-sample-size` (default 2,000).
 
 ## Data preparation scripts
 
@@ -319,9 +335,13 @@ Purpose: follow the Janesick label-evaluation protocol using the H5AD
 plotting, then runs K-means with K=17 and sweeps Leiden resolutions from 0.2
 through 2.0 in 0.2 steps. It reports the best ARI resolution, best NMI
 resolution, and ARI/NMI paired at the best-NMI resolution. It also writes only
-the matched labeled cells to the output CSVs and UMAP comparisons. Install the
-optional `evaluation` extra for scIB-metrics, igraph, UMAP, matplotlib, and
-scikit-learn.
+the matched labeled cells to the output CSVs and UMAP comparisons. It reports
+silhouette for K-means, every Leiden resolution, and the ground-truth cell-type
+grouping, using a reproducible 2,000-cell sample by default. The per-resolution
+CSV includes each Leiden silhouette, and `metrics.csv` records
+silhouette at the best-ARI and best-NMI resolutions plus the silhouette-best
+resolution. Install the optional `evaluation` extra for scIB-metrics, igraph,
+UMAP, matplotlib, and scikit-learn.
 
 ### `castle_refree/src/castle_refree/evaluate_split_proseg_labels.py`
 
@@ -333,7 +353,8 @@ the candidate mapping and distances for review. It limits evaluation to cells
 present in the ProSeg CASTLE run, excludes `Unlabeled`/blank labels, and computes
 K-means K=17 plus Leiden resolutions 0.2–2.0. The coordinate match is
 approximate because the two datasets have different cell identifiers and
-segmentations.
+segmentations. It also reports sampled silhouette scores for K-means, each
+Leiden resolution, and the ground-truth cell-type grouping.
 
 ### `castle_refree/scripts/summarize_crop_ablations.py`
 

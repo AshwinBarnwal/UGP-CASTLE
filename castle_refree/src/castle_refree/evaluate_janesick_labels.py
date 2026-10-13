@@ -19,10 +19,28 @@ sys.path = [entry for entry in sys.path if str(Path(entry or ".").resolve()) != 
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
-from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
+from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score, silhouette_score
 
 
 UNLABELED_NAMES = {"unlabeled", "unlabelled"}
+DEFAULT_SILHOUETTE_SAMPLE_SIZE = 2000
+
+
+def sampled_silhouette(X, labels, sample_size, seed):
+    """Estimate Euclidean silhouette on a reproducible sample to avoid quadratic full-data cost."""
+    labels = np.asarray(labels)
+    n_all_clusters = np.unique(labels).size
+    if n_all_clusters < 2 or n_all_clusters >= len(labels):
+        return float("nan")
+    sample_size = min(sample_size, len(labels))
+    if sample_size == len(labels):
+        return float(silhouette_score(X, labels))
+    indices = np.random.default_rng(seed).choice(len(labels), size=sample_size, replace=False)
+    sampled_labels = labels[indices]
+    n_clusters = np.unique(sampled_labels).size
+    if n_clusters < 2 or n_clusters >= sample_size:
+        return float("nan")
+    return float(silhouette_score(X[indices], sampled_labels))
 
 
 def main():
@@ -43,7 +61,10 @@ def main():
     )
     parser.add_argument("--umap-neighbors", type=int, default=15)
     parser.add_argument("--umap-min-dist", type=float, default=0.3)
+    parser.add_argument("--silhouette-sample-size", type=int, default=DEFAULT_SILHOUETTE_SAMPLE_SIZE)
     args = parser.parse_args()
+    if args.silhouette_sample_size < 2:
+        raise ValueError("--silhouette-sample-size must be at least 2.")
 
     labels = pd.read_csv(args.labels, dtype={"Barcode": str})
     required_columns = {"Barcode", "Cluster"}
@@ -102,6 +123,8 @@ def main():
     predicted = KMeans(n_clusters=n_classes, random_state=args.seed, n_init=10).fit_predict(X)
     kmeans_ari = adjusted_rand_score(y, predicted)
     kmeans_nmi = normalized_mutual_info_score(y, predicted)
+    kmeans_silhouette = sampled_silhouette(X, predicted, args.silhouette_sample_size, args.seed)
+    cell_type_silhouette = sampled_silhouette(X, y, args.silhouette_sample_size, args.seed)
 
     # Leiden operates on a neighbor graph, not directly on a fixed number of
     # clusters. Use scib-metrics' graph construction and Leiden implementation
@@ -143,10 +166,14 @@ def main():
             "n_clusters": int(pd.Series(leiden_labels).nunique()),
             "ARI": float(adjusted_rand_score(y, leiden_labels)),
             "NMI": float(normalized_mutual_info_score(y, leiden_labels, average_method="arithmetic")),
+            "silhouette": sampled_silhouette(
+                X, leiden_labels, args.silhouette_sample_size, args.seed
+            ),
         })
     leiden_scores = pd.DataFrame(resolution_rows)
     best_ari_row = leiden_scores.loc[leiden_scores["ARI"].idxmax()]
     best_nmi_row = leiden_scores.loc[leiden_scores["NMI"].idxmax()]
+    best_silhouette_row = leiden_scores.loc[leiden_scores["silhouette"].idxmax()]
 
     # The scIB Leiden metric selects resolution by NMI and reports both scores
     # from that same clustering. Keep this paired result alongside independent
@@ -222,6 +249,8 @@ def main():
     print(f"Embedding key/shape:        {args.embedding_key} / {X.shape}")
     print(f"K-means ARI (K={n_classes}):   {kmeans_ari:.6f}")
     print(f"K-means NMI (K={n_classes}):   {kmeans_nmi:.6f}")
+    print(f"K-means silhouette:            {kmeans_silhouette:.6f}")
+    print(f"Cell-type silhouette:          {cell_type_silhouette:.6f}")
     print(
         f"Leiden best ARI:             {best_ari_row['ARI']:.6f} "
         f"(resolution {best_ari_row['resolution']:.1f})"
@@ -233,7 +262,13 @@ def main():
     print(
         f"Leiden at best-NMI res:      ARI={paired_at_best_nmi['ARI']:.6f}, "
         f"NMI={paired_at_best_nmi['NMI']:.6f} "
+        f"silhouette={paired_at_best_nmi['silhouette']:.6f} "
         f"(resolution {paired_at_best_nmi['resolution']:.1f})"
+    )
+    print(
+        f"Leiden best silhouette:        {best_silhouette_row['silhouette']:.6f} "
+        f"(resolution {best_silhouette_row['resolution']:.1f}; "
+        f"sample size {min(args.silhouette_sample_size, len(y))})"
     )
 
     out = Path(args.output)
@@ -250,13 +285,20 @@ def main():
         "leiden_neighbors": args.leiden_neighbors,
         "umap_neighbors": args.umap_neighbors,
         "umap_min_dist": args.umap_min_dist,
+        "silhouette_sample_size": min(args.silhouette_sample_size, len(y)),
+        "cell_type_silhouette": cell_type_silhouette,
         "kmeans_K": n_classes,
         "kmeans_ARI": kmeans_ari,
         "kmeans_NMI": kmeans_nmi,
+        "kmeans_silhouette": kmeans_silhouette,
         "leiden_best_ARI": float(best_ari_row["ARI"]),
         "leiden_best_ARI_resolution": float(best_ari_row["resolution"]),
         "leiden_best_NMI": float(best_nmi_row["NMI"]),
         "leiden_best_NMI_resolution": float(best_nmi_row["resolution"]),
+        "leiden_silhouette_at_best_ARI_resolution": float(best_ari_row["silhouette"]),
+        "leiden_silhouette_at_best_NMI_resolution": float(best_nmi_row["silhouette"]),
+        "leiden_best_silhouette": float(best_silhouette_row["silhouette"]),
+        "leiden_best_silhouette_resolution": float(best_silhouette_row["resolution"]),
         "leiden_ARI_at_best_NMI_resolution": float(paired_at_best_nmi["ARI"]),
         "leiden_NMI_at_best_NMI_resolution": float(paired_at_best_nmi["NMI"]),
     }]).to_csv(out / "metrics.csv", index=False)

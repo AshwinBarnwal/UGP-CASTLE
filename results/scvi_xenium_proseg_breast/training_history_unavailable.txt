@@ -1,0 +1,1 @@
+training_history.csv could not be recovered. The failed run saved the scVI model checkpoint, but scvi-tools model.save() does not persist the trainer's epoch history, and no history/log file was present in the output directory. The latent representation and downstream outputs were recomputed from the saved checkpoint without retraining.

@@ -3,17 +3,44 @@
 from __future__ import annotations
 
 import argparse
+import io
 import random
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
-from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
+from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score, silhouette_score
 
 
 N_CELL_TYPES = 17
+DEFAULT_SILHOUETTE_SAMPLE_SIZE = 2000
 DEFAULT_INPUT = Path(__file__).resolve().parents[2] / "results" / "scvi_xenium_proseg_breast" / "adata_scvi.h5ad"
+
+
+def save_png(fig: object, path: Path, *, dpi: int = 220) -> None:
+    """Encode plots in memory, then write with a Windows-compatible binary file handle."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    buffer = io.BytesIO()
+    fig.savefig(buffer, format="png", dpi=dpi, bbox_inches="tight")
+    path.write_bytes(buffer.getvalue())
+
+
+def sampled_silhouette(X: np.ndarray, labels: np.ndarray, sample_size: int, seed: int) -> float:
+    """Estimate Euclidean silhouette on a reproducible sample to avoid quadratic full-data cost."""
+    labels = np.asarray(labels)
+    sample_size = min(sample_size, len(labels))
+    n_all_clusters = np.unique(labels).size
+    if n_all_clusters < 2 or n_all_clusters >= len(labels):
+        return float("nan")
+    if sample_size == len(labels):
+        return float(silhouette_score(X, labels))
+    indices = np.random.default_rng(seed).choice(len(labels), size=sample_size, replace=False)
+    sampled_labels = labels[indices]
+    n_clusters = np.unique(sampled_labels).size
+    if n_clusters < 2 or n_clusters >= sample_size:
+        return float("nan")
+    return float(silhouette_score(X[indices], sampled_labels))
 
 
 def main() -> None:
@@ -28,7 +55,10 @@ def main() -> None:
     parser.add_argument("--leiden-neighbors", type=int, default=15)
     parser.add_argument("--umap-neighbors", type=int, default=15)
     parser.add_argument("--umap-min-dist", type=float, default=0.3)
+    parser.add_argument("--silhouette-sample-size", type=int, default=DEFAULT_SILHOUETTE_SAMPLE_SIZE)
     args = parser.parse_args()
+    if args.silhouette_sample_size < 2:
+        raise ValueError("--silhouette-sample-size must be at least 2.")
 
     if not args.input.is_file():
         raise FileNotFoundError(f"Input H5AD does not exist: {args.input}")
@@ -61,6 +91,8 @@ def main() -> None:
     predicted = KMeans(n_clusters=N_CELL_TYPES, random_state=args.seed, n_init=10).fit_predict(X)
     kmeans_ari = float(adjusted_rand_score(y, predicted))
     kmeans_nmi = float(normalized_mutual_info_score(y, predicted))
+    kmeans_silhouette = sampled_silhouette(X, predicted, args.silhouette_sample_size, args.seed)
+    cell_type_silhouette = sampled_silhouette(X, y, args.silhouette_sample_size, args.seed)
 
     try:
         import igraph
@@ -89,12 +121,16 @@ def main() -> None:
                 "n_clusters": int(pd.Series(cluster_labels).nunique()),
                 "ARI": float(adjusted_rand_score(y, cluster_labels)),
                 "NMI": float(normalized_mutual_info_score(y, cluster_labels, average_method="arithmetic")),
+                "silhouette": sampled_silhouette(
+                    X, cluster_labels, args.silhouette_sample_size, args.seed
+                ),
             }
         )
 
     leiden_scores = pd.DataFrame(resolution_rows)
     best_ari_row = leiden_scores.loc[leiden_scores["ARI"].idxmax()]
     best_nmi_row = leiden_scores.loc[leiden_scores["NMI"].idxmax()]
+    best_silhouette_row = leiden_scores.loc[leiden_scores["silhouette"].idxmax()]
     best_ari_resolution = float(best_ari_row["resolution"])
     best_nmi_resolution = float(best_nmi_row["resolution"])
     leiden_best_ari = leiden_by_resolution[best_ari_resolution]
@@ -159,13 +195,20 @@ def main() -> None:
             "leiden_neighbors": args.leiden_neighbors,
             "umap_neighbors": args.umap_neighbors,
             "umap_min_dist": args.umap_min_dist,
+            "silhouette_sample_size": min(args.silhouette_sample_size, len(y)),
+            "cell_type_silhouette": cell_type_silhouette,
             "kmeans_K": N_CELL_TYPES,
             "kmeans_ARI": kmeans_ari,
             "kmeans_NMI": kmeans_nmi,
+            "kmeans_silhouette": kmeans_silhouette,
             "leiden_best_ARI": float(best_ari_row["ARI"]),
             "leiden_best_ARI_resolution": best_ari_resolution,
             "leiden_best_NMI": float(best_nmi_row["NMI"]),
             "leiden_best_NMI_resolution": best_nmi_resolution,
+            "leiden_silhouette_at_best_ARI_resolution": float(best_ari_row["silhouette"]),
+            "leiden_silhouette_at_best_NMI_resolution": float(best_nmi_row["silhouette"]),
+            "leiden_best_silhouette": float(best_silhouette_row["silhouette"]),
+            "leiden_best_silhouette_resolution": float(best_silhouette_row["resolution"]),
             "leiden_ARI_at_best_NMI_resolution": float(best_nmi_row["ARI"]),
             "leiden_NMI_at_best_NMI_resolution": float(best_nmi_row["NMI"]),
             "cell_type_used_in_training": False,
@@ -179,7 +222,7 @@ def main() -> None:
         fig, axes = plt.subplots(1, 2, figsize=(15, 7), constrained_layout=True)
         plot_labeling(axes[0], clusters, title)
         plot_labeling(axes[1], y, ground_truth_title)
-        fig.savefig(output / filename, dpi=220, bbox_inches="tight")
+        save_png(fig, output / filename)
         plt.close(fig)
 
     save_pair("umap_kmeans_vs_ground_truth.png", predicted, f"K-means clusters (K={N_CELL_TYPES})")
@@ -196,9 +239,16 @@ def main() -> None:
 
     print(f"Excluded {int(excluded.sum())} unlabeled/blank cells before clustering and scoring.")
     print(f"K-means K={N_CELL_TYPES}: ARI={kmeans_ari:.6f}, NMI={kmeans_nmi:.6f}")
+    print(f"K-means silhouette={kmeans_silhouette:.6f}; cell-type silhouette={cell_type_silhouette:.6f}")
     print(
         f"Leiden best ARI={best_ari_row['ARI']:.6f} at {best_ari_resolution:.1f}; "
-        f"best NMI={best_nmi_row['NMI']:.6f} at {best_nmi_resolution:.1f}"
+        f"best NMI={best_nmi_row['NMI']:.6f} at {best_nmi_resolution:.1f}; "
+        f"silhouette there={best_nmi_row['silhouette']:.6f}"
+    )
+    print(
+        f"Leiden best silhouette={best_silhouette_row['silhouette']:.6f} "
+        f"at {best_silhouette_row['resolution']:.1f} "
+        f"(sample size {min(args.silhouette_sample_size, len(y))})"
     )
     print(f"Saved evaluation to {output.resolve()}")
 

@@ -15,6 +15,26 @@ DEFAULT_INPUT = Path(__file__).resolve().parents[2] / "adata_for_tuto_s1.h5ad"
 DEFAULT_OUTPUT = Path(__file__).resolve().parents[2] / "results" / "scvi_xenium_proseg_breast"
 
 
+def history_frame(history: object) -> pd.DataFrame:
+    """Normalize scvi-tools history containers across package versions."""
+    if isinstance(history, pd.DataFrame):
+        return history.reset_index(drop=False)
+    if hasattr(history, "items"):
+        columns: dict[str, pd.Series] = {}
+        for name, value in history.items():
+            if isinstance(value, pd.DataFrame):
+                series = value[name] if name in value else value.iloc[:, 0]
+            elif isinstance(value, pd.Series):
+                series = value
+            else:
+                array = np.asarray(value)
+                array = array.reshape(1) if array.ndim == 0 else array.reshape(-1)
+                series = pd.Series(array)
+            columns[str(name)] = series.reset_index(drop=True)
+        return pd.DataFrame(columns)
+    return pd.DataFrame(np.asarray(history))
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Train unsupervised scVI on raw counts from the refined ProSeg breast H5AD."
@@ -125,10 +145,10 @@ def main() -> None:
     model.save(str(args.output / "model"), overwrite=True, save_anndata=False)
     history = model.history
     try:
-        if isinstance(history, pd.DataFrame):
-            history.to_csv(args.output / "training_history.csv")
-        elif history is not None:
-            pd.DataFrame(history).to_csv(args.output / "training_history.csv", index=False)
+        if history is not None:
+            history_frame(history).to_csv(
+                args.output / "training_history.csv", index=False
+            )
     except (TypeError, ValueError) as exc:
         # Do not lose the latent/H5AD/UMAP outputs if scvi-tools changes the
         # shape/type of its in-memory history object between versions.

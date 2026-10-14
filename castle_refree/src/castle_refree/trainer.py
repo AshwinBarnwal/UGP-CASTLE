@@ -104,16 +104,17 @@ class CastleTrainer:
         # they are unavailable, so background is deliberately zero instead of a
         # free term that could absorb biology.
         if self.data.negative_control_counts is None:
-            return np.zeros((self.data.n_cells, self.data.n_genes), dtype=np.float32)
+            # Keep one scalar per cell. PyTorch broadcasts the batch x 1 term
+            # across genes in the likelihood, avoiding an otherwise enormous
+            # cells x genes dense allocation on high-plex spatial datasets.
+            return np.zeros((self.data.n_cells, 1), dtype=np.float32)
         # If supplied, this column is interpreted as the already calibrated
         # expected total background per cell. It is spread uniformly because a
         # panel-specific background profile cannot be identified from totals.
         expected_total = np.maximum(
             self.data.negative_control_counts.astype(np.float32), 0.0
         )
-        return np.repeat(
-            (expected_total / self.data.n_genes)[:, None], self.data.n_genes, axis=1
-        ).astype(np.float32)
+        return (expected_total / self.data.n_genes)[:, None].astype(np.float32)
 
     def _dense_counts(self, ids: np.ndarray) -> np.ndarray:
         return self.data.counts[ids].toarray().astype(np.float32, copy=False)
@@ -368,7 +369,15 @@ class CastleTrainer:
                 ids = np.arange(start, min(start + self.cfg.train.cache_batch_size, self.data.n_cells))
                 result = self._infer_batch(ids)
                 purified_blocks.append(sparse.csr_matrix(result.purified.cpu().numpy()))
-                responsibility_blocks.append(sparse.csr_matrix(result.own_responsibility.cpu().numpy()))
+                # A responsibility is only meaningful where an observed count
+                # exists: purified = observed_count * responsibility. Storing
+                # dense responsibilities for all zero cell-gene pairs scales as
+                # n_cells * n_genes and is prohibitive for 6k-plex data.
+                observed = self.data.counts[ids].copy().tocsr()
+                observed.data.fill(1.0)
+                responsibility_blocks.append(
+                    observed.multiply(result.own_responsibility.cpu().numpy()).tocsr()
+                )
                 eta[ids] = result.eta.cpu().numpy()
                 niche_effect_l1[ids] = result.niche_effect.abs().mean(1).cpu().numpy()
 

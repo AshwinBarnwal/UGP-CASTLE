@@ -1,0 +1,10 @@
+{
+  "name": "kl1.0_z16_mog0",
+  "kl_max": 1.0,
+  "latent_dims": 16,
+  "mixture_components": 0,
+  "encoder_input": "dual",
+  "heldout_gene_loglik": -16.55750846862793,
+  "epochs": 205,
+  "minutes": 26.6
+}

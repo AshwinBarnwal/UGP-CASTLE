@@ -1,0 +1,49 @@
+{"sigma_own": 0.5, "sigma_sp": 1.0, "loglik": -2089228.2486374462}
+{"sigma_own": 0.5, "sigma_sp": 2.0, "loglik": -2088240.7088255514}
+{"sigma_own": 0.5, "sigma_sp": 4.0, "loglik": -2095571.9047278157}
+{"sigma_own": 0.75, "sigma_sp": 1.0, "loglik": -2076467.474675557}
+{"sigma_own": 0.75, "sigma_sp": 2.0, "loglik": -2078195.0768193053}
+{"sigma_own": 0.75, "sigma_sp": 4.0, "loglik": -2081400.3693583861}
+{"sigma_own": 1.0, "sigma_sp": 1.0, "loglik": -2082291.0748708388}
+{"sigma_own": 1.0, "sigma_sp": 2.0, "loglik": -2083279.1072265098}
+{"sigma_own": 1.0, "sigma_sp": 4.0, "loglik": -2083758.0747437398}
+{"sigma_own": 1.5, "sigma_sp": 1.0, "loglik": -2092019.2264729345}
+{"sigma_own": 1.5, "sigma_sp": 2.0, "loglik": -2091778.9771234668}
+{"sigma_own": 1.5, "sigma_sp": 4.0, "loglik": -2089838.5674126467}
+{"variant": "null", "removed_fraction": 0.21289444994771822}
+{"variant": "spill", "removed_fraction": 0.25989796327611125}
+{"variant": "niche", "removed_fraction": 0.21094126908211464}
+{
+  "model": "S2_P3_refined",
+  "cells": 19615,
+  "scored_cells": 18738,
+  "null_median_cell_removed": 0.22289861333617983,
+  "null_total_removed": 0.21382505873580604,
+  "null_mean_eta": 0.2723466455936432,
+  "spill_eta_spearman": 0.411754527641267,
+  "spill_eta_delta_spearman": 0.41016382448200106,
+  "spill_injected_removed_fraction": 0.4287895041776347,
+  "spill_cell_pearson": 0.8191276466408782,
+  "spill_entry_pearson": 0.7683314250928847,
+  "niche_extra_removed_fraction": 0.09960059973498411,
+  "niche_baseline_removed_rate": 0.14350053026871196,
+  "nucleus_cells": 18190,
+  "nucleus_r_raw": 0.7589928829797998,
+  "nucleus_r_purified": 0.7944719832058655,
+  "nucleus_r_gain": 0.03547910022606575,
+  "nucleus_fraction_cells_improved": 0.9818031885651457,
+  "offtype_hetero_cells": 13881,
+  "offtype_hetero_raw": 0.036685248049688216,
+  "offtype_hetero_purified": 0.032358205384435304,
+  "offtype_hetero_nucleus": 0.033951428970987706,
+  "offtype_hetero_reduction": 0.11795048133222819,
+  "offtype_homo_cells": 4320,
+  "offtype_homo_raw": 0.021580989916903586,
+  "offtype_homo_purified": 0.021428047237711526,
+  "offtype_homo_nucleus": 0.022259831807276125,
+  "offtype_homo_reduction": 0.007086916762435669,
+  "marker_genes": "{\"B_cell\": [\"TNFRSF17\", \"TENT5C\", \"CD79A\", \"CD19\", \"MS4A1\"], \"Endothelial\": [\"CLDN5\", \"HOXD9\", \"EGFL7\", \"SOX17\", \"VWF\"], \"Epithelial\": [\"ABCC11\", \"HPX\", \"ANKRD30A\", \"FASN\", \"MLPH\"], \"Myeloid\": [\"MMP12\", \"LILRA4\", \"ITGAX\", \"C15orf48\", \"LYZ\"], \"Myoepithelial\": [\"KRT6B\", \"KRT5\", \"PTN\", \"KRT14\", \"KRT16\"], \"Stromal\": [\"LEP\", \"TAC1\", \"FBLN1\", \"ADIPOQ\", \"CCDC80\"], \"T_cell\": [\"PDCD1\", \"IL7R\", \"CD3E\", \"CD3D\", \"KLRD1\"]}",
+  "seed": 7,
+  "sigma_own": 0.75,
+  "sigma_sp": 1.0
+}

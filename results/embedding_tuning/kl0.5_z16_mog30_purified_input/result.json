@@ -1,0 +1,10 @@
+{
+  "name": "kl0.5_z16_mog30_purified_input",
+  "kl_max": 0.5,
+  "latent_dims": 16,
+  "mixture_components": 30,
+  "encoder_input": "purified",
+  "heldout_gene_loglik": -16.53732681274414,
+  "epochs": 172,
+  "minutes": 19.5
+}

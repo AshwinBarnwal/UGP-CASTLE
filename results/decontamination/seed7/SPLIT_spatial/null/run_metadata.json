@@ -1,0 +1,14 @@
+{
+  "cells_in_bundle": 19615,
+  "cells_corrected_by_split": 19376,
+  "cells_passed_through": 239,
+  "genes_passed_through": [
+    "AKR1C1",
+    "ANGPT2",
+    "BTNL9",
+    "CD8B",
+    "POLR2J3",
+    "TPSAB1"
+  ],
+  "removed_fraction": 0.18338346481323242
+}

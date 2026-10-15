@@ -1,0 +1,10 @@
+{
+  "variant": "niche",
+  "train_seconds": 1115.3,
+  "max_epochs": 50,
+  "n_neighbors": 10,
+  "scvi_tools": "1.5.1",
+  "output": "model_corrected px_rate median (tutorial generated_expression)",
+  "native_samples": 3,
+  "removed_fraction": 0.0022242069244384766
+}

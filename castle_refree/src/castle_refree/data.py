@@ -17,6 +17,12 @@ class SpatialCountData:
     cell_ids: np.ndarray
     gene_ids: np.ndarray
     negative_control_counts: np.ndarray | None = None
+    # Optional raw-bundle extras (export_xenium_raw.py). Contact edges are
+    # undirected cell-index pairs with shared boundary and centroid distance.
+    contact_edges: pd.DataFrame | None = None
+    geometry: pd.DataFrame | None = None
+    control_counts: np.ndarray | None = None
+    n_control_features: int = 0
 
     @property
     def n_cells(self) -> int:
@@ -81,6 +87,14 @@ def load_spatial_data(
         if "negative_control_counts" in spatial
         else None
     )
+    control_cols = [c for c in ("control_probe_counts", "control_codeword_counts") if c in spatial]
+    controls = (
+        spatial[control_cols].sum(axis=1).to_numpy(dtype=np.float32) if control_cols else None
+    )
+    n_control_features = 0
+    if (root / "control_features.tsv").exists():
+        features = pd.read_csv(root / "control_features.tsv", sep="\t")
+        n_control_features = int(features["feature_type"].str.startswith("Negative Control").sum())
 
     cell_total = np.asarray(matrix.sum(axis=1)).ravel()
     keep_cells = cell_total >= min_counts
@@ -90,6 +104,32 @@ def load_spatial_data(
     cells = cells[keep_cells]
     if neg is not None:
         neg = neg[keep_cells]
+    if controls is not None:
+        controls = controls[keep_cells]
+
+    geometry = None
+    if (root / "geometry.csv").exists():
+        geometry = (
+            pd.read_csv(root / "geometry.csv", dtype={"cell_id": str})
+            .set_index("cell_id")
+            .reindex(cells)
+            .reset_index(drop=True)
+        )
+    contact_edges = None
+    if (root / "edges_contact.csv").exists():
+        edges = pd.read_csv(root / "edges_contact.csv", dtype={"cell_i": str, "cell_j": str})
+        index = pd.Index(cells)
+        i = index.get_indexer(edges["cell_i"])
+        j = index.get_indexer(edges["cell_j"])
+        kept = (i >= 0) & (j >= 0)
+        contact_edges = pd.DataFrame(
+            {
+                "i": i[kept],
+                "j": j[kept],
+                "shared_boundary_um": edges["shared_boundary_um"].to_numpy()[kept],
+                "distance_um": edges["centroid_distance_um"].to_numpy()[kept],
+            }
+        )
 
     detected = np.asarray((matrix > 0).sum(axis=0)).ravel()
     keep_genes = detected >= min_cells_per_gene
@@ -102,4 +142,10 @@ def load_spatial_data(
     if not np.isfinite(coordinates).all() or not np.isfinite(areas).all():
         raise ValueError("Coordinates and areas must be finite")
     areas = np.maximum(areas, np.finfo(np.float32).eps)
-    return SpatialCountData(matrix, coordinates, areas, cells, genes, neg)
+    return SpatialCountData(
+        matrix, coordinates, areas, cells, genes, neg,
+        contact_edges=contact_edges,
+        geometry=geometry,
+        control_counts=controls,
+        n_control_features=n_control_features,
+    )

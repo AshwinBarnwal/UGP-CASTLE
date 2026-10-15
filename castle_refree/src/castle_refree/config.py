@@ -39,6 +39,21 @@ class ContaminationConfig:
     expression_guided: ExpressionGuidedConfig = field(
         default_factory=ExpressionGuidedConfig
     )
+    # Defaults reproduce the original model (M0); the decontamination configs
+    # switch these on one at a time.
+    spillover_graph: str = "knn"  # "knn" | "contact" (segmentation-mask contacts)
+    kernel: str = "fixed"  # "fixed" distance softmax | "learned" (distance, boundary, size)
+    geometry_features: str = "basic"  # "basic" | "full" (geometry.csv morphology)
+    donor_gradient: bool = False  # donor eta/kernel computed live with gradients
+    library: str = "free"  # "free" per-cell parameter | "amortized" q(l|x) with area prior
+    library_prior_sd: float = 0.5  # sd of log library prior around log(kappa * area)
+    background: str = "auto"  # "auto" (legacy) | "none" | "controls" (eq. 13) | "controls_learned"
+    background_dirichlet_alpha: float = 1000.0  # beta ~ Dirichlet(alpha * 1) for "controls_learned"
+    unroll_fix: bool = False  # K real re-encodings; export the trained posterior
+    # Spec-faithful option (CASTLE text, Sec. 7.1): donors' mu_j re-decoded inside
+    # each batch with gradients (first hop live, second hop cached).
+    donor_live_profiles: bool = False
+    freeze_in_joint: bool = False  # eta network and transfer kernel fixed during the niche phase
 
 
 @dataclass
@@ -47,6 +62,19 @@ class ModelConfig:
     intrinsic_dim: int = 16
     niche_dim: int = 16
     dropout: float = 0.05
+    likelihood: str = "nb"  # "nb" | "zinb" (zero inflation; ablation only)
+    # "mean": averages over the 4/8/12 nearest cells. "contact_steps": one scale per
+    # contact step (cells within 1, 2, ... steps of touching cells), each with
+    # attention plus rotation-invariant azimuthal features (spec Sec. 5.2).
+    niche_encoder: str = "mean"
+    niche_steps: int = 3
+    niche_input: str = "hidden"  # neighbours described by encoder "hidden" states or by their "zc"
+    # Identity (z_c) model options; defaults reproduce the original network.
+    n_layers: int = 1  # hidden layers in the expression encoder and decoders
+    norm: str = "layer"  # "layer" | "batch"
+    encoder_input: str = "purified"  # "purified" (re-encode purified counts) | "dual" (raw + purified)
+    prior_components: int = 0  # 0 = standard normal prior on z_c; K > 0 = learned Gaussian mixture
+    hidden_genes: list[int] = field(default_factory=list)  # genes masked from the encoder (tuning)
     contamination: ContaminationConfig = field(default_factory=ContaminationConfig)
 
 
@@ -60,6 +88,14 @@ class LossConfig:
     lambda_hsic: float = 0.01
     lambda_eta: float = 0.01
     lambda_library: float = 0.1
+    kl_warmup_epochs: int = 0  # > 0: z_c KL weight rises 0 -> kl_max over these epochs (all phases)
+    kl_max: float = 1.0
+    prior_weight_alpha: float = 0.5  # Dirichlet concentration on mixture weights (< 1 = sparse)
+    identity_recon_weight: float = 0.0  # extra reconstruction from z_c alone (no niche effect)
+    block_delta_grad: bool = False  # the niche effect cannot send gradients into z_c
+    lambda_niche_zc: float = 0.0  # niche head predicts the touching neighbours' mean z_c
+    niche_target: str = "decoded"  # "decoded" mu_j | "purified" counts of touching cells (spec eq. 31)
+    niche_group_weight: float = 0.0  # gamma_grp in spec eq. 29
 
 
 @dataclass
@@ -76,6 +112,10 @@ class TrainConfig:
     device: str = "auto"
     num_threads: int = 0
     checkpoint_every: int = 5
+    validation_fraction: float = 0.0  # cells held out of training (early stopping, tuning)
+    early_stop_phase: str = ""  # phase whose length is set by early stopping ("" = off)
+    early_stop_patience: int = 15
+    early_stop_min_epochs: int = 10
 
 
 @dataclass

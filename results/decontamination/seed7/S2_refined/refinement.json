@@ -1,0 +1,8 @@
+{
+  "best": {
+    "sigma_own": 0.75,
+    "sigma_sp": 2.0,
+    "loglik": -2080660.928342702
+  },
+  "spill_band_um": 2.0
+}

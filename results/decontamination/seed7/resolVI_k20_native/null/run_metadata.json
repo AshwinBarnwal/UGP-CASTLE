@@ -1,0 +1,10 @@
+{
+  "variant": "null",
+  "train_seconds": 1050.3,
+  "max_epochs": 50,
+  "n_neighbors": 20,
+  "scvi_tools": "1.5.1",
+  "output": "model_corrected px_rate median (tutorial generated_expression)",
+  "native_samples": 3,
+  "removed_fraction": 0.00217515230178833
+}

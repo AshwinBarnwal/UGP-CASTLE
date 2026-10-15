@@ -1,0 +1,229 @@
+feature	feature_type
+NegControlProbe_00042	Negative Control Probe
+NegControlProbe_00041	Negative Control Probe
+NegControlProbe_00039	Negative Control Probe
+NegControlProbe_00035	Negative Control Probe
+NegControlProbe_00034	Negative Control Probe
+NegControlProbe_00033	Negative Control Probe
+NegControlProbe_00031	Negative Control Probe
+NegControlProbe_00025	Negative Control Probe
+NegControlProbe_00024	Negative Control Probe
+NegControlProbe_00022	Negative Control Probe
+NegControlProbe_00019	Negative Control Probe
+NegControlProbe_00017	Negative Control Probe
+NegControlProbe_00016	Negative Control Probe
+NegControlProbe_00014	Negative Control Probe
+NegControlProbe_00013	Negative Control Probe
+NegControlProbe_00012	Negative Control Probe
+NegControlProbe_00009	Negative Control Probe
+NegControlProbe_00004	Negative Control Probe
+NegControlProbe_00003	Negative Control Probe
+NegControlProbe_00002	Negative Control Probe
+antisense_PROKR2	Negative Control Probe
+antisense_ULK3	Negative Control Probe
+antisense_SCRIB	Negative Control Probe
+antisense_TRMU	Negative Control Probe
+antisense_MYLIP	Negative Control Probe
+antisense_LGI3	Negative Control Probe
+antisense_BCL2L15	Negative Control Probe
+antisense_ADCY4	Negative Control Probe
+NegControlCodeword_0500	Negative Control Codeword
+NegControlCodeword_0501	Negative Control Codeword
+NegControlCodeword_0502	Negative Control Codeword
+NegControlCodeword_0503	Negative Control Codeword
+NegControlCodeword_0504	Negative Control Codeword
+NegControlCodeword_0505	Negative Control Codeword
+NegControlCodeword_0506	Negative Control Codeword
+NegControlCodeword_0507	Negative Control Codeword
+NegControlCodeword_0508	Negative Control Codeword
+NegControlCodeword_0509	Negative Control Codeword
+NegControlCodeword_0510	Negative Control Codeword
+NegControlCodeword_0511	Negative Control Codeword
+NegControlCodeword_0512	Negative Control Codeword
+NegControlCodeword_0513	Negative Control Codeword
+NegControlCodeword_0514	Negative Control Codeword
+NegControlCodeword_0515	Negative Control Codeword
+NegControlCodeword_0516	Negative Control Codeword
+NegControlCodeword_0517	Negative Control Codeword
+NegControlCodeword_0518	Negative Control Codeword
+NegControlCodeword_0519	Negative Control Codeword
+NegControlCodeword_0520	Negative Control Codeword
+NegControlCodeword_0521	Negative Control Codeword
+NegControlCodeword_0522	Negative Control Codeword
+NegControlCodeword_0523	Negative Control Codeword
+NegControlCodeword_0524	Negative Control Codeword
+NegControlCodeword_0525	Negative Control Codeword
+NegControlCodeword_0526	Negative Control Codeword
+NegControlCodeword_0527	Negative Control Codeword
+NegControlCodeword_0528	Negative Control Codeword
+NegControlCodeword_0529	Negative Control Codeword
+NegControlCodeword_0530	Negative Control Codeword
+NegControlCodeword_0531	Negative Control Codeword
+NegControlCodeword_0532	Negative Control Codeword
+NegControlCodeword_0533	Negative Control Codeword
+NegControlCodeword_0534	Negative Control Codeword
+NegControlCodeword_0535	Negative Control Codeword
+NegControlCodeword_0536	Negative Control Codeword
+NegControlCodeword_0537	Negative Control Codeword
+NegControlCodeword_0538	Negative Control Codeword
+NegControlCodeword_0539	Negative Control Codeword
+NegControlCodeword_0540	Negative Control Codeword
+BLANK_0006	Blank Codeword
+BLANK_0013	Blank Codeword
+BLANK_0037	Blank Codeword
+BLANK_0069	Blank Codeword
+BLANK_0072	Blank Codeword
+BLANK_0087	Blank Codeword
+BLANK_0110	Blank Codeword
+BLANK_0114	Blank Codeword
+BLANK_0120	Blank Codeword
+BLANK_0147	Blank Codeword
+BLANK_0180	Blank Codeword
+BLANK_0186	Blank Codeword
+BLANK_0272	Blank Codeword
+BLANK_0278	Blank Codeword
+BLANK_0319	Blank Codeword
+BLANK_0321	Blank Codeword
+BLANK_0337	Blank Codeword
+BLANK_0350	Blank Codeword
+BLANK_0351	Blank Codeword
+BLANK_0352	Blank Codeword
+BLANK_0353	Blank Codeword
+BLANK_0354	Blank Codeword
+BLANK_0355	Blank Codeword
+BLANK_0356	Blank Codeword
+BLANK_0357	Blank Codeword
+BLANK_0358	Blank Codeword
+BLANK_0359	Blank Codeword
+BLANK_0360	Blank Codeword
+BLANK_0361	Blank Codeword
+BLANK_0362	Blank Codeword
+BLANK_0363	Blank Codeword
+BLANK_0364	Blank Codeword
+BLANK_0365	Blank Codeword
+BLANK_0366	Blank Codeword
+BLANK_0367	Blank Codeword
+BLANK_0368	Blank Codeword
+BLANK_0369	Blank Codeword
+BLANK_0370	Blank Codeword
+BLANK_0371	Blank Codeword
+BLANK_0372	Blank Codeword
+BLANK_0373	Blank Codeword
+BLANK_0374	Blank Codeword
+BLANK_0375	Blank Codeword
+BLANK_0376	Blank Codeword
+BLANK_0377	Blank Codeword
+BLANK_0378	Blank Codeword
+BLANK_0379	Blank Codeword
+BLANK_0380	Blank Codeword
+BLANK_0381	Blank Codeword
+BLANK_0382	Blank Codeword
+BLANK_0383	Blank Codeword
+BLANK_0384	Blank Codeword
+BLANK_0385	Blank Codeword
+BLANK_0386	Blank Codeword
+BLANK_0387	Blank Codeword
+BLANK_0388	Blank Codeword
+BLANK_0389	Blank Codeword
+BLANK_0390	Blank Codeword
+BLANK_0391	Blank Codeword
+BLANK_0392	Blank Codeword
+BLANK_0393	Blank Codeword
+BLANK_0394	Blank Codeword
+BLANK_0395	Blank Codeword
+BLANK_0396	Blank Codeword
+BLANK_0397	Blank Codeword
+BLANK_0398	Blank Codeword
+BLANK_0399	Blank Codeword
+BLANK_0400	Blank Codeword
+BLANK_0401	Blank Codeword
+BLANK_0402	Blank Codeword
+BLANK_0403	Blank Codeword
+BLANK_0404	Blank Codeword
+BLANK_0405	Blank Codeword
+BLANK_0406	Blank Codeword
+BLANK_0407	Blank Codeword
+BLANK_0408	Blank Codeword
+BLANK_0409	Blank Codeword
+BLANK_0410	Blank Codeword
+BLANK_0411	Blank Codeword
+BLANK_0412	Blank Codeword
+BLANK_0413	Blank Codeword
+BLANK_0414	Blank Codeword
+BLANK_0415	Blank Codeword
+BLANK_0416	Blank Codeword
+BLANK_0417	Blank Codeword
+BLANK_0418	Blank Codeword
+BLANK_0419	Blank Codeword
+BLANK_0420	Blank Codeword
+BLANK_0421	Blank Codeword
+BLANK_0422	Blank Codeword
+BLANK_0423	Blank Codeword
+BLANK_0424	Blank Codeword
+BLANK_0425	Blank Codeword
+BLANK_0426	Blank Codeword
+BLANK_0427	Blank Codeword
+BLANK_0428	Blank Codeword
+BLANK_0429	Blank Codeword
+BLANK_0430	Blank Codeword
+BLANK_0431	Blank Codeword
+BLANK_0432	Blank Codeword
+BLANK_0433	Blank Codeword
+BLANK_0434	Blank Codeword
+BLANK_0435	Blank Codeword
+BLANK_0436	Blank Codeword
+BLANK_0437	Blank Codeword
+BLANK_0438	Blank Codeword
+BLANK_0439	Blank Codeword
+BLANK_0440	Blank Codeword
+BLANK_0441	Blank Codeword
+BLANK_0442	Blank Codeword
+BLANK_0443	Blank Codeword
+BLANK_0444	Blank Codeword
+BLANK_0445	Blank Codeword
+BLANK_0446	Blank Codeword
+BLANK_0447	Blank Codeword
+BLANK_0448	Blank Codeword
+BLANK_0449	Blank Codeword
+BLANK_0450	Blank Codeword
+BLANK_0451	Blank Codeword
+BLANK_0452	Blank Codeword
+BLANK_0453	Blank Codeword
+BLANK_0454	Blank Codeword
+BLANK_0455	Blank Codeword
+BLANK_0456	Blank Codeword
+BLANK_0457	Blank Codeword
+BLANK_0458	Blank Codeword
+BLANK_0459	Blank Codeword
+BLANK_0460	Blank Codeword
+BLANK_0461	Blank Codeword
+BLANK_0462	Blank Codeword
+BLANK_0463	Blank Codeword
+BLANK_0464	Blank Codeword
+BLANK_0465	Blank Codeword
+BLANK_0466	Blank Codeword
+BLANK_0467	Blank Codeword
+BLANK_0468	Blank Codeword
+BLANK_0469	Blank Codeword
+BLANK_0470	Blank Codeword
+BLANK_0471	Blank Codeword
+BLANK_0472	Blank Codeword
+BLANK_0473	Blank Codeword
+BLANK_0474	Blank Codeword
+BLANK_0475	Blank Codeword
+BLANK_0476	Blank Codeword
+BLANK_0477	Blank Codeword
+BLANK_0478	Blank Codeword
+BLANK_0479	Blank Codeword
+BLANK_0480	Blank Codeword
+BLANK_0481	Blank Codeword
+BLANK_0482	Blank Codeword
+BLANK_0483	Blank Codeword
+BLANK_0484	Blank Codeword
+BLANK_0485	Blank Codeword
+BLANK_0486	Blank Codeword
+BLANK_0487	Blank Codeword
+BLANK_0488	Blank Codeword
+BLANK_0489	Blank Codeword
+BLANK_0497	Blank Codeword
+BLANK_0499	Blank Codeword

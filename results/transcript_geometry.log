@@ -1,0 +1,17 @@
+  transcripts read: 5,000,000
+  transcripts read: 10,000,000
+  transcripts read: 15,000,000
+  transcripts read: 20,000,000
+  transcripts read: 25,000,000
+  transcripts read: 30,000,000
+  transcripts read: 35,000,000
+  transcripts read: 40,000,000
+  transcripts read: 42,638,083
+{
+  "molecules_used": 32143179,
+  "outer_distance_threshold_cell_radii": 1.1506738662719727,
+  "median_cell_z": 21.624099731445312,
+  "median_z_extent": 4.047972583770752,
+  "median_outer_fraction": 0.08695652173913043,
+  "crop_molecules": 3814901
+}

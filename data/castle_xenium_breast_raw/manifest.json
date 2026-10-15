@@ -1,0 +1,19 @@
+{
+  "source_bundle": "C:\\Users\\rayar\\Documents\\IIT Kanpur Academics\\UGPs\\UGP-2 (Hamim Zafar)\\Xenium_breast_cancer",
+  "cells": 167780,
+  "genes": 313,
+  "control_features": 228,
+  "segmentation": "Xenium nucleus expansion (label mask masks/1 in cells.zarr.zip)",
+  "contact_definition": "4-connected adjacency of label-mask pixels",
+  "pixel_size_um": 0.21249999113380946,
+  "contact_edges": 472672,
+  "median_contact_degree": 6.0,
+  "cells_without_contacts": 472,
+  "mask_area_vs_cell_area_correlation": 0.9999999999999983,
+  "qv_threshold_for_nucleus_counts": 20.0,
+  "transcript_whole_cell_total": 32102954.0,
+  "feature_matrix_total": 32102954.0,
+  "cells_with_any_mismatch": 0,
+  "nucleus_fraction_of_counts": 0.40790024399757385,
+  "counts_nucleus_used_for_training": false
+}

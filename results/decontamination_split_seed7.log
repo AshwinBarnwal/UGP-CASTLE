@@ -1,0 +1,520 @@
+== null
+Begin: process_cell_type_info
+process_cell_type_info: number of cells in reference: 25968
+process_cell_type_info: number of genes in reference: 307
+
+              B_Cells          CD4+_T_Cells          CD8+_T_Cells 
+                 1450                  2883                  1839 
+               DCIS 1                DCIS 2           Endothelial 
+                 1861                  2159                  1053 
+       Invasive_Tumor             IRF7+_DCs            LAMP3+_DCs 
+                 4554                   210                   103 
+        Macrophages_1         Macrophages_2            Mast_Cells 
+                 2960                   760                    92 
+        Myoepi_ACTA2+         Myoepi_KRT15+     Perivascular-Like 
+                 1234                   603                   280 
+Prolif_Invasive_Tumor               Stromal 
+                 1329                  2598 
+End: process_cell_type_info
+create.RCTD: getting regression differentially expressed genes: 
+get_de_genes: B_Cells found DE genes: 35
+get_de_genes: CD4+_T_Cells found DE genes: 48
+get_de_genes: CD8+_T_Cells found DE genes: 44
+get_de_genes: DCIS 1 found DE genes: 23
+get_de_genes: DCIS 2 found DE genes: 27
+get_de_genes: Endothelial found DE genes: 41
+get_de_genes: Invasive_Tumor found DE genes: 16
+get_de_genes: IRF7+_DCs found DE genes: 27
+get_de_genes: LAMP3+_DCs found DE genes: 41
+get_de_genes: Macrophages_1 found DE genes: 36
+get_de_genes: Macrophages_2 found DE genes: 33
+get_de_genes: Mast_Cells found DE genes: 19
+get_de_genes: Myoepi_ACTA2+ found DE genes: 30
+get_de_genes: Myoepi_KRT15+ found DE genes: 40
+get_de_genes: Perivascular-Like found DE genes: 36
+get_de_genes: Prolif_Invasive_Tumor found DE genes: 21
+get_de_genes: Stromal found DE genes: 33
+get_de_genes: total DE genes: 275
+create.RCTD: getting platform effect normalization differentially expressed genes: 
+get_de_genes: B_Cells found DE genes: 42
+get_de_genes: CD4+_T_Cells found DE genes: 51
+get_de_genes: CD8+_T_Cells found DE genes: 53
+get_de_genes: DCIS 1 found DE genes: 35
+get_de_genes: DCIS 2 found DE genes: 36
+get_de_genes: Endothelial found DE genes: 49
+get_de_genes: Invasive_Tumor found DE genes: 30
+get_de_genes: IRF7+_DCs found DE genes: 30
+get_de_genes: LAMP3+_DCs found DE genes: 51
+get_de_genes: Macrophages_1 found DE genes: 40
+get_de_genes: Macrophages_2 found DE genes: 39
+get_de_genes: Mast_Cells found DE genes: 22
+get_de_genes: Myoepi_ACTA2+ found DE genes: 40
+get_de_genes: Myoepi_KRT15+ found DE genes: 56
+get_de_genes: Perivascular-Like found DE genes: 47
+get_de_genes: Prolif_Invasive_Tumor found DE genes: 40
+get_de_genes: Stromal found DE genes: 39
+get_de_genes: total DE genes: 287
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+starting worker pid=23344 on localhost:11257 at 03:38:56.649
+starting worker pid=11372 on localhost:11257 at 03:38:57.075
+starting worker pid=7648 on localhost:11257 at 03:38:57.501
+starting worker pid=12740 on localhost:11257 at 03:38:58.214
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Likelihood value: 200559.119245005
+Sigma value:  0.84
+starting worker pid=960 on localhost:11257 at 03:39:26.366
+starting worker pid=12872 on localhost:11257 at 03:39:26.690
+starting worker pid=23288 on localhost:11257 at 03:39:26.953
+starting worker pid=1184 on localhost:11257 at 03:39:27.186
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Likelihood value: 198940.826515075
+Sigma value:  0.69
+starting worker pid=4768 on localhost:11257 at 03:39:53.183
+starting worker pid=13872 on localhost:11257 at 03:39:53.430
+starting worker pid=6728 on localhost:11257 at 03:39:53.715
+starting worker pid=17876 on localhost:11257 at 03:39:53.981
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Likelihood value: 198319.034284343
+Sigma value:  0.68
+starting worker pid=13192 on localhost:11257 at 03:40:20.234
+starting worker pid=20536 on localhost:11257 at 03:40:20.505
+starting worker pid=14800 on localhost:11257 at 03:40:20.768
+starting worker pid=4260 on localhost:11257 at 03:40:21.034
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Likelihood value: 198315.596484414
+Sigma value:  0.68
+starting worker pid=7572 on localhost:11257 at 03:40:46.258
+starting worker pid=21072 on localhost:11257 at 03:40:46.523
+starting worker pid=23068 on localhost:11257 at 03:40:46.777
+starting worker pid=6676 on localhost:11257 at 03:40:47.039
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+[1] "gather_results: finished 1000"
+[1] "gather_results: finished 2000"
+[1] "gather_results: finished 3000"
+[1] "gather_results: finished 4000"
+[1] "gather_results: finished 5000"
+[1] "gather_results: finished 6000"
+[1] "gather_results: finished 7000"
+[1] "gather_results: finished 8000"
+[1] "gather_results: finished 9000"
+[1] "gather_results: finished 10000"
+[1] "gather_results: finished 11000"
+[1] "gather_results: finished 12000"
+[1] "gather_results: finished 13000"
+[1] "gather_results: finished 14000"
+[1] "gather_results: finished 15000"
+[1] "gather_results: finished 16000"
+[1] "gather_results: finished 17000"
+[1] "gather_results: finished 18000"
+[1] "gather_results: finished 19000"
+Correcting singlets ...
+Updating scores ...
+Add coordinates to results ...
+Computing alternative annotations ...
+Replacing results_df ...
+  Auto belonging_threshold: 0.0461 (75th pct of min/max ratio)
+Cleaning reference profiles ...
+  Fraction of profile removed per cell type:
+              B_Cells          CD4+_T_Cells          CD8+_T_Cells 
+                0.040                 0.041                 0.041 
+               DCIS 1                DCIS 2           Endothelial 
+                0.048                 0.042                 0.040 
+       Invasive_Tumor             IRF7+_DCs            LAMP3+_DCs 
+                0.029                 0.055                 0.038 
+        Macrophages_1         Macrophages_2            Mast_Cells 
+                0.031                 0.035                 0.033 
+        Myoepi_ACTA2+         Myoepi_KRT15+     Perivascular-Like 
+                0.052                 0.054                 0.033 
+Prolif_Invasive_Tumor               Stromal 
+                0.031                 0.041 
+Rescaling deconvolution weights per cell.
+Processing block 1/1
+Computing nearest neighbors
+Only one graph name supplied, storing nearest-neighbor graph only
+N = 291096 ( 78 %) edges were pruned
+done null (RCTD 25.3 min)
+== spill
+Begin: process_cell_type_info
+process_cell_type_info: number of cells in reference: 25968
+process_cell_type_info: number of genes in reference: 307
+
+              B_Cells          CD4+_T_Cells          CD8+_T_Cells 
+                 1450                  2883                  1839 
+               DCIS 1                DCIS 2           Endothelial 
+                 1861                  2159                  1053 
+       Invasive_Tumor             IRF7+_DCs            LAMP3+_DCs 
+                 4554                   210                   103 
+        Macrophages_1         Macrophages_2            Mast_Cells 
+                 2960                   760                    92 
+        Myoepi_ACTA2+         Myoepi_KRT15+     Perivascular-Like 
+                 1234                   603                   280 
+Prolif_Invasive_Tumor               Stromal 
+                 1329                  2598 
+End: process_cell_type_info
+create.RCTD: getting regression differentially expressed genes: 
+get_de_genes: B_Cells found DE genes: 35
+get_de_genes: CD4+_T_Cells found DE genes: 48
+get_de_genes: CD8+_T_Cells found DE genes: 44
+get_de_genes: DCIS 1 found DE genes: 23
+get_de_genes: DCIS 2 found DE genes: 27
+get_de_genes: Endothelial found DE genes: 41
+get_de_genes: Invasive_Tumor found DE genes: 16
+get_de_genes: IRF7+_DCs found DE genes: 27
+get_de_genes: LAMP3+_DCs found DE genes: 41
+get_de_genes: Macrophages_1 found DE genes: 36
+get_de_genes: Macrophages_2 found DE genes: 33
+get_de_genes: Mast_Cells found DE genes: 19
+get_de_genes: Myoepi_ACTA2+ found DE genes: 30
+get_de_genes: Myoepi_KRT15+ found DE genes: 40
+get_de_genes: Perivascular-Like found DE genes: 36
+get_de_genes: Prolif_Invasive_Tumor found DE genes: 21
+get_de_genes: Stromal found DE genes: 33
+get_de_genes: total DE genes: 275
+create.RCTD: getting platform effect normalization differentially expressed genes: 
+get_de_genes: B_Cells found DE genes: 42
+get_de_genes: CD4+_T_Cells found DE genes: 51
+get_de_genes: CD8+_T_Cells found DE genes: 53
+get_de_genes: DCIS 1 found DE genes: 35
+get_de_genes: DCIS 2 found DE genes: 36
+get_de_genes: Endothelial found DE genes: 49
+get_de_genes: Invasive_Tumor found DE genes: 30
+get_de_genes: IRF7+_DCs found DE genes: 30
+get_de_genes: LAMP3+_DCs found DE genes: 51
+get_de_genes: Macrophages_1 found DE genes: 40
+get_de_genes: Macrophages_2 found DE genes: 39
+get_de_genes: Mast_Cells found DE genes: 22
+get_de_genes: Myoepi_ACTA2+ found DE genes: 40
+get_de_genes: Myoepi_KRT15+ found DE genes: 56
+get_de_genes: Perivascular-Like found DE genes: 47
+get_de_genes: Prolif_Invasive_Tumor found DE genes: 40
+get_de_genes: Stromal found DE genes: 39
+get_de_genes: total DE genes: 287
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+starting worker pid=16676 on localhost:11257 at 04:04:56.418
+starting worker pid=23760 on localhost:11257 at 04:04:56.794
+starting worker pid=22196 on localhost:11257 at 04:04:57.141
+starting worker pid=7116 on localhost:11257 at 04:04:57.506
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Likelihood value: 201432.351453469
+Sigma value:  0.84
+starting worker pid=15492 on localhost:11257 at 04:05:27.924
+starting worker pid=23084 on localhost:11257 at 04:05:28.211
+starting worker pid=22188 on localhost:11257 at 04:05:28.507
+starting worker pid=10756 on localhost:11257 at 04:05:28.804
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Likelihood value: 199694.109893819
+Sigma value:  0.69
+starting worker pid=16728 on localhost:11257 at 04:05:57.404
+starting worker pid=11300 on localhost:11257 at 04:05:57.694
+starting worker pid=22444 on localhost:11257 at 04:05:57.983
+starting worker pid=23652 on localhost:11257 at 04:05:58.264
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Likelihood value: 198951.580159271
+Sigma value:  0.67
+starting worker pid=23068 on localhost:11257 at 04:06:26.152
+starting worker pid=15700 on localhost:11257 at 04:06:26.462
+starting worker pid=2932 on localhost:11257 at 04:06:26.768
+starting worker pid=22484 on localhost:11257 at 04:06:27.079
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Likelihood value: 198932.840405076
+Sigma value:  0.67
+starting worker pid=4472 on localhost:11257 at 04:06:55.994
+starting worker pid=19812 on localhost:11257 at 04:06:56.272
+starting worker pid=12476 on localhost:11257 at 04:06:56.580
+starting worker pid=11020 on localhost:11257 at 04:06:56.870
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+[1] "gather_results: finished 1000"
+[1] "gather_results: finished 2000"
+[1] "gather_results: finished 3000"
+[1] "gather_results: finished 4000"
+[1] "gather_results: finished 5000"
+[1] "gather_results: finished 6000"
+[1] "gather_results: finished 7000"
+[1] "gather_results: finished 8000"
+[1] "gather_results: finished 9000"
+[1] "gather_results: finished 10000"
+[1] "gather_results: finished 11000"
+[1] "gather_results: finished 12000"
+[1] "gather_results: finished 13000"
+[1] "gather_results: finished 14000"
+[1] "gather_results: finished 15000"
+[1] "gather_results: finished 16000"
+[1] "gather_results: finished 17000"
+[1] "gather_results: finished 18000"
+[1] "gather_results: finished 19000"
+Correcting singlets ...
+Updating scores ...
+Add coordinates to results ...
+Computing alternative annotations ...
+Replacing results_df ...
+  Auto belonging_threshold: 0.0461 (75th pct of min/max ratio)
+Cleaning reference profiles ...
+  Fraction of profile removed per cell type:
+              B_Cells          CD4+_T_Cells          CD8+_T_Cells 
+                0.040                 0.041                 0.041 
+               DCIS 1                DCIS 2           Endothelial 
+                0.048                 0.042                 0.040 
+       Invasive_Tumor             IRF7+_DCs            LAMP3+_DCs 
+                0.029                 0.055                 0.038 
+        Macrophages_1         Macrophages_2            Mast_Cells 
+                0.031                 0.035                 0.033 
+        Myoepi_ACTA2+         Myoepi_KRT15+     Perivascular-Like 
+                0.052                 0.054                 0.033 
+Prolif_Invasive_Tumor               Stromal 
+                0.031                 0.041 
+Rescaling deconvolution weights per cell.
+Processing block 1/1
+Computing nearest neighbors
+Only one graph name supplied, storing nearest-neighbor graph only
+N = 291120 ( 78 %) edges were pruned
+done spill (RCTD 26.4 min)
+== niche
+Begin: process_cell_type_info
+process_cell_type_info: number of cells in reference: 25968
+process_cell_type_info: number of genes in reference: 307
+
+              B_Cells          CD4+_T_Cells          CD8+_T_Cells 
+                 1450                  2883                  1839 
+               DCIS 1                DCIS 2           Endothelial 
+                 1861                  2159                  1053 
+       Invasive_Tumor             IRF7+_DCs            LAMP3+_DCs 
+                 4554                   210                   103 
+        Macrophages_1         Macrophages_2            Mast_Cells 
+                 2960                   760                    92 
+        Myoepi_ACTA2+         Myoepi_KRT15+     Perivascular-Like 
+                 1234                   603                   280 
+Prolif_Invasive_Tumor               Stromal 
+                 1329                  2598 
+End: process_cell_type_info
+create.RCTD: getting regression differentially expressed genes: 
+get_de_genes: B_Cells found DE genes: 35
+get_de_genes: CD4+_T_Cells found DE genes: 48
+get_de_genes: CD8+_T_Cells found DE genes: 44
+get_de_genes: DCIS 1 found DE genes: 23
+get_de_genes: DCIS 2 found DE genes: 27
+get_de_genes: Endothelial found DE genes: 41
+get_de_genes: Invasive_Tumor found DE genes: 16
+get_de_genes: IRF7+_DCs found DE genes: 27
+get_de_genes: LAMP3+_DCs found DE genes: 41
+get_de_genes: Macrophages_1 found DE genes: 36
+get_de_genes: Macrophages_2 found DE genes: 33
+get_de_genes: Mast_Cells found DE genes: 19
+get_de_genes: Myoepi_ACTA2+ found DE genes: 30
+get_de_genes: Myoepi_KRT15+ found DE genes: 40
+get_de_genes: Perivascular-Like found DE genes: 36
+get_de_genes: Prolif_Invasive_Tumor found DE genes: 21
+get_de_genes: Stromal found DE genes: 33
+get_de_genes: total DE genes: 275
+create.RCTD: getting platform effect normalization differentially expressed genes: 
+get_de_genes: B_Cells found DE genes: 42
+get_de_genes: CD4+_T_Cells found DE genes: 51
+get_de_genes: CD8+_T_Cells found DE genes: 53
+get_de_genes: DCIS 1 found DE genes: 35
+get_de_genes: DCIS 2 found DE genes: 36
+get_de_genes: Endothelial found DE genes: 49
+get_de_genes: Invasive_Tumor found DE genes: 30
+get_de_genes: IRF7+_DCs found DE genes: 30
+get_de_genes: LAMP3+_DCs found DE genes: 51
+get_de_genes: Macrophages_1 found DE genes: 40
+get_de_genes: Macrophages_2 found DE genes: 39
+get_de_genes: Mast_Cells found DE genes: 22
+get_de_genes: Myoepi_ACTA2+ found DE genes: 40
+get_de_genes: Myoepi_KRT15+ found DE genes: 56
+get_de_genes: Perivascular-Like found DE genes: 47
+get_de_genes: Prolif_Invasive_Tumor found DE genes: 40
+get_de_genes: Stromal found DE genes: 39
+get_de_genes: total DE genes: 287
+fitBulk: decomposing bulk
+chooseSigma: using initial Q_mat with sigma =  1
+starting worker pid=16236 on localhost:11257 at 04:32:03.180
+starting worker pid=14308 on localhost:11257 at 04:32:03.534
+starting worker pid=18940 on localhost:11257 at 04:32:03.876
+starting worker pid=24164 on localhost:11257 at 04:32:04.224
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Likelihood value: 199673.581903001
+Sigma value:  0.84
+starting worker pid=17988 on localhost:11257 at 04:32:37.083
+starting worker pid=11008 on localhost:11257 at 04:32:37.413
+starting worker pid=9832 on localhost:11257 at 04:32:37.763
+starting worker pid=5908 on localhost:11257 at 04:32:38.102
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Likelihood value: 198212.147686521
+Sigma value:  0.7
+starting worker pid=12300 on localhost:11257 at 04:33:11.619
+starting worker pid=7664 on localhost:11257 at 04:33:11.962
+starting worker pid=22028 on localhost:11257 at 04:33:12.310
+starting worker pid=24308 on localhost:11257 at 04:33:12.652
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Likelihood value: 197756.959565021
+Sigma value:  0.7
+starting worker pid=21424 on localhost:11257 at 04:33:46.715
+starting worker pid=3272 on localhost:11257 at 04:33:47.058
+starting worker pid=8680 on localhost:11257 at 04:33:47.369
+starting worker pid=23576 on localhost:11257 at 04:33:47.708
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+Loading required package: spacexr
+loaded spacexr and set parent environment
+[1] "gather_results: finished 1000"
+[1] "gather_results: finished 2000"
+[1] "gather_results: finished 3000"
+[1] "gather_results: finished 4000"
+[1] "gather_results: finished 5000"
+[1] "gather_results: finished 6000"
+[1] "gather_results: finished 7000"
+[1] "gather_results: finished 8000"
+[1] "gather_results: finished 9000"
+[1] "gather_results: finished 10000"
+[1] "gather_results: finished 11000"
+[1] "gather_results: finished 12000"
+[1] "gather_results: finished 13000"
+[1] "gather_results: finished 14000"
+[1] "gather_results: finished 15000"
+[1] "gather_results: finished 16000"
+[1] "gather_results: finished 17000"
+[1] "gather_results: finished 18000"
+[1] "gather_results: finished 19000"
+Correcting singlets ...
+Updating scores ...
+Add coordinates to results ...
+Computing alternative annotations ...
+Replacing results_df ...
+  Auto belonging_threshold: 0.0461 (75th pct of min/max ratio)
+Cleaning reference profiles ...
+  Fraction of profile removed per cell type:
+              B_Cells          CD4+_T_Cells          CD8+_T_Cells 
+                0.040                 0.041                 0.041 
+               DCIS 1                DCIS 2           Endothelial 
+                0.048                 0.042                 0.040 
+       Invasive_Tumor             IRF7+_DCs            LAMP3+_DCs 
+                0.029                 0.055                 0.038 
+        Macrophages_1         Macrophages_2            Mast_Cells 
+                0.031                 0.035                 0.033 
+        Myoepi_ACTA2+         Myoepi_KRT15+     Perivascular-Like 
+                0.052                 0.054                 0.033 
+Prolif_Invasive_Tumor               Stromal 
+                0.031                 0.041 
+Rescaling deconvolution weights per cell.
+Processing block 1/1
+Computing nearest neighbors
+Only one graph name supplied, storing nearest-neighbor graph only
+N = 291096 ( 78 %) edges were pruned
+done niche (RCTD 23.7 min)
+Warning messages:
+1: The `rctd` argument of `purify()` is deprecated as of SPLIT 0.2.0.
+ℹ The `rctd` argument is deprecated and will be removed in a future release.
+  Please supply `primary_cell_type`, `deconvolution_weights`, and `reference`
+  directly. If you have RCTD output, use
+  `convert_rctd_result_to_purify_input(rctd = rctd)` 
+2: The argument(s) DO_purify_singlets are deprecated and ignored as of SPLIT v0.2.0. 
+3: In rctd_free_purify(counts = counts, primary_cell_type = rctd$primary_cell_type,  :
+  Some deconvolution weights do not sum to 1.
+4: In rctd_free_purify(counts = counts, primary_cell_type = rctd$primary_cell_type,  :
+  Some genes not present in the reference; removed from output.
+5: The argument(s) DO_purify_singlets are deprecated and ignored as of SPLIT v0.2.0. 
+6: In rctd_free_purify(counts = counts, primary_cell_type = rctd$primary_cell_type,  :
+  Some deconvolution weights do not sum to 1.
+7: In rctd_free_purify(counts = counts, primary_cell_type = rctd$primary_cell_type,  :
+  Some genes not present in the reference; removed from output.
+8: The argument(s) DO_purify_singlets are deprecated and ignored as of SPLIT v0.2.0. 
+9: In rctd_free_purify(counts = counts, primary_cell_type = rctd$primary_cell_type,  :
+  Some deconvolution weights do not sum to 1.
+10: In rctd_free_purify(counts = counts, primary_cell_type = rctd$primary_cell_type,  :
+  Some genes not present in the reference; removed from output.

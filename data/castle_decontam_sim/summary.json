@@ -1,0 +1,15 @@
+{
+  "cells": 19615,
+  "spill_mean_eta_true": 0.11889987809369894,
+  "spill_moved_fraction": 0.10937400472515539,
+  "niche_responders": 412,
+  "niche_genes": [
+    "LUM",
+    "POSTN",
+    "CXCL12",
+    "CCDC80",
+    "PTGDS",
+    "MMP2"
+  ],
+  "niche_added_fraction_of_their_counts": 1.0078093826597503
+}

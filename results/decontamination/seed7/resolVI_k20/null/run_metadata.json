@@ -1,0 +1,9 @@
+{
+  "variant": "null",
+  "train_seconds": 1050.3,
+  "max_epochs": 50,
+  "n_neighbors": 20,
+  "scvi_tools": "1.5.1",
+  "output": "observed counts x own-source share",
+  "removed_fraction": 0.05518597364425659
+}

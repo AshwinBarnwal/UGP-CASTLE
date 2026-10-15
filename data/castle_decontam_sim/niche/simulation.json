@@ -1,0 +1,15 @@
+{
+  "variant": "niche",
+  "target": "Stromal",
+  "neighbour": "Epithelial",
+  "fold": 2.0,
+  "genes": [
+    "LUM",
+    "POSTN",
+    "CXCL12",
+    "CCDC80",
+    "PTGDS",
+    "MMP2"
+  ],
+  "seed": 11
+}

@@ -1,0 +1,52 @@
+{
+  "input_h5ad": "/home/nischay/UGP-CASTLE/data/janesick_breast.h5ad",
+  "input_sha256": "3dd35eadceada1a664bb2a429965048906378741df60fa3f34c12e630c89462e",
+  "cells": 167780,
+  "input_genes": 313,
+  "x_dtype": "int32",
+  "raw_nonnegative_integer_counts": true,
+  "cell_id_unique": true,
+  "gene_symbol_unique": true,
+  "spatial_coordinates": [
+    167780,
+    2
+  ],
+  "published_label_column": "cell_type",
+  "published_label_counts": {
+    "Stromal": 41422,
+    "Invasive_Tumor": 34374,
+    "DCIS_1": 12923,
+    "DCIS_2": 11683,
+    "Macrophages_1": 11174,
+    "Endothelial": 8931,
+    "Unknown": 8554,
+    "CD4+_T_Cells": 8453,
+    "Myoepi_ACTA2+": 7078,
+    "CD8+_T_Cells": 6940,
+    "B_Cells": 4987,
+    "Prolif_Invasive_Tumor": 3775,
+    "Myoepi_KRT15+": 2860,
+    "Macrophages_2": 1624,
+    "Perivascular-Like": 847,
+    "Stromal_&_T_Cell_Hybrid": 607,
+    "T_Cell_&_Tumor_Hybrid": 589,
+    "IRF7+_DCs": 494,
+    "LAMP3+_DCs": 298,
+    "Mast_Cells": 167
+  },
+  "uce": {
+    "input": "the original H5AD; UCE filters to human genes with protein embeddings",
+    "gene_selection": "none (all raw panel genes)"
+  },
+  "nicheformer": {
+    "model_vocabulary_genes": 20310,
+    "matched_input_genes": 311,
+    "unmatched_or_dropped_input_genes": 2,
+    "mapping_file": "nicheformer_gene_mapping.tsv",
+    "species_token": 5,
+    "technology": "Xenium",
+    "technology_token": 9,
+    "modality_token_spatial": 4,
+    "technology_mean": "/home/nischay/UGP-CASTLE/external/nicheformer/data/model_means/xenium_mean_script.npy"
+  }
+}

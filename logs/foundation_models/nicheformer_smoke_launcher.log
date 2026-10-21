@@ -1,0 +1,21 @@
+
+Nicheformer cells:   0%|          | 0/1 [00:00<?, ?it/s]
+Nicheformer cells: 100%|██████████| 1/1 [00:05<00:00,  5.09s/it]
+Nicheformer cells: 100%|██████████| 1/1 [00:05<00:00,  5.09s/it]
+{
+  "status": "complete",
+  "cells_completed": 256,
+  "cells_total": 256,
+  "elapsed_seconds_this_session": 5.0897767543792725,
+  "model": "theislab/Nicheformer",
+  "model_revision": "0ba4ba162f9ad3d6c8b713761954c31be2fa69ed",
+  "embedding_shape": [
+    256,
+    512
+  ],
+  "precision": "fp16",
+  "batch_size": 4,
+  "read_chunk_size": 512,
+  "matched_genes": 6031,
+  "pooling": "official get_embeddings: last layer, context removed, mean over sequence"
+}

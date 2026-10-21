@@ -1,0 +1,39 @@
+{
+  "input_h5ad": "/home/nischay/UGP-CASTLE/data/cosmx_frontal_cortex.h5ad",
+  "input_sha256": "8342cdcafe3350b1d88fd7ecb603cb1f4da2be72833c70ea229b2092ea282e26",
+  "cells": 188686,
+  "input_genes": 6278,
+  "x_dtype": "int32",
+  "raw_nonnegative_integer_counts": true,
+  "cell_id_unique": true,
+  "gene_symbol_unique": true,
+  "spatial_coordinates": [
+    188686,
+    2
+  ],
+  "published_label_column": "cell_type",
+  "published_label_counts": {
+    "Oligodendrocyte": 83137,
+    "Cortical layer neuron": 30859,
+    "Astrocyte": 22162,
+    "Endothelial": 17642,
+    "Microglia": 12027,
+    "Inhibitory neuron": 9898,
+    "Unknown": 7214,
+    "OPC": 5747
+  },
+  "uce": {
+    "input": "the original H5AD; UCE filters to human genes with protein embeddings",
+    "gene_selection": "none (all raw panel genes)"
+  },
+  "nicheformer": {
+    "model_vocabulary_genes": 20310,
+    "matched_input_genes": 6031,
+    "unmatched_or_dropped_input_genes": 247,
+    "mapping_file": "nicheformer_gene_mapping.tsv",
+    "species_token": 5,
+    "technology_token_cosmx": 8,
+    "modality_token_spatial": 4,
+    "technology_mean": "/home/nischay/UGP-CASTLE/external/nicheformer/data/model_means/cosmx_mean_script.npy"
+  }
+}

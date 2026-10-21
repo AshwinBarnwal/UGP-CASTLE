@@ -1,0 +1,42 @@
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/anndata/utils.py:434: FutureWarning: Importing read_csv from `anndata` is deprecated. Import anndata.io.read_csv instead.
+  warnings.warn(msg, FutureWarning)
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/anndata/utils.py:434: FutureWarning: Importing read_excel from `anndata` is deprecated. Import anndata.io.read_excel instead.
+  warnings.warn(msg, FutureWarning)
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/anndata/utils.py:434: FutureWarning: Importing read_hdf from `anndata` is deprecated. Import anndata.io.read_hdf instead.
+  warnings.warn(msg, FutureWarning)
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/anndata/utils.py:434: FutureWarning: Importing read_loom from `anndata` is deprecated. Import anndata.io.read_loom instead.
+  warnings.warn(msg, FutureWarning)
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/anndata/utils.py:434: FutureWarning: Importing read_mtx from `anndata` is deprecated. Import anndata.io.read_mtx instead.
+  warnings.warn(msg, FutureWarning)
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/anndata/utils.py:434: FutureWarning: Importing read_text from `anndata` is deprecated. Import anndata.io.read_text instead.
+  warnings.warn(msg, FutureWarning)
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/anndata/utils.py:434: FutureWarning: Importing read_umi_tools from `anndata` is deprecated. Import anndata.io.read_umi_tools instead.
+  warnings.warn(msg, FutureWarning)
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/scanpy/tools/_utils.py:41: UserWarning: You’re trying to run this on 512 dimensions of `.X`, if you really want this, set `use_rep='X'`.
+         Falling back to preprocessing with `sc.pp.pca` and default params.
+  warnings.warn(
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/scanpy/tools/_utils.py:41: UserWarning: You’re trying to run this on 512 dimensions of `.X`, if you really want this, set `use_rep='X'`.
+         Falling back to preprocessing with `sc.pp.pca` and default params.
+  warnings.warn(
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/scanpy/tools/_utils.py:41: UserWarning: You’re trying to run this on 512 dimensions of `.X`, if you really want this, set `use_rep='X'`.
+         Falling back to preprocessing with `sc.pp.pca` and default params.
+  warnings.warn(
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/scanpy/tools/_utils.py:41: UserWarning: You’re trying to run this on 512 dimensions of `.X`, if you really want this, set `use_rep='X'`.
+         Falling back to preprocessing with `sc.pp.pca` and default params.
+  warnings.warn(
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/scanpy/tools/_utils.py:41: UserWarning: You’re trying to run this on 1280 dimensions of `.X`, if you really want this, set `use_rep='X'`.
+         Falling back to preprocessing with `sc.pp.pca` and default params.
+  warnings.warn(
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/scanpy/tools/_utils.py:41: UserWarning: You’re trying to run this on 1280 dimensions of `.X`, if you really want this, set `use_rep='X'`.
+         Falling back to preprocessing with `sc.pp.pca` and default params.
+  warnings.warn(
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/scanpy/tools/_utils.py:41: UserWarning: You’re trying to run this on 1280 dimensions of `.X`, if you really want this, set `use_rep='X'`.
+         Falling back to preprocessing with `sc.pp.pca` and default params.
+  warnings.warn(
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/scanpy/tools/_utils.py:41: UserWarning: You’re trying to run this on 1280 dimensions of `.X`, if you really want this, set `use_rep='X'`.
+         Falling back to preprocessing with `sc.pp.pca` and default params.
+  warnings.warn(
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(

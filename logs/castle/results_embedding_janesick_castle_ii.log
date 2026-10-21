@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/nischay/UGP-CASTLE/castle_refree/scripts/run_castle_identity_experiment.py", line 133, in <module>
+    main()
+  File "/home/nischay/UGP-CASTLE/castle_refree/scripts/run_castle_identity_experiment.py", line 81, in main
+    data = load_spatial_data(cfg.data.input_dir, cfg.data.min_counts, cfg.data.min_cells_per_gene)
+  File "/home/nischay/UGP-CASTLE/castle_refree/src/castle_refree/data.py", line 63, in load_spatial_data
+    else mmread(root / "counts.mtx")
+  File "/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/scipy/io/_fast_matrix_market/__init__.py", line 358, in mmread
+    cursor, stream_to_close = _get_read_cursor(source)
+  File "/home/nischay/miniconda3/envs/ugp-nicheformer/lib/python3.10/site-packages/scipy/io/_fast_matrix_market/__init__.py", line 197, in _get_read_cursor
+    return _fmm_core.open_read_file(path, parallelism), ret_stream_to_close
+ValueError: Line 1: Not a Matrix Market file. Missing banner.
+ERROR conda.cli.main_run:execute(142): `conda run python castle_refree/scripts/run_castle_identity_experiment.py ii --bundle data/castle_xenium_breast_raw --output results/embedding_janesick/castle_ii --dataset-name Janesick Xenium breast Rep1 --device cuda --threads 8` failed. (See above for error)

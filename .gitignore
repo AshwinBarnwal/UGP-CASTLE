@@ -21,3 +21,8 @@ dist/
 .vscode/
 .idea/
 
+
+# Datasets and generated outputs
+/data/
+/external/
+/results/foundation_models/

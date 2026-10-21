@@ -1,0 +1,14 @@
+# Mirrors the official UCE requirements. Install a CUDA-enabled torch wheel
+# appropriate for the server before installing this file if the cluster does
+# not expose one through its environment modules.
+accelerate==0.24.0
+anndata>=0.10
+numpy==1.26.4
+pandas==2.2.2
+requests==2.25.1
+scanpy==1.10.2
+scipy==1.14.1
+torch==2.1.1
+tqdm==4.66.5
+urllib3==1.26.6
+

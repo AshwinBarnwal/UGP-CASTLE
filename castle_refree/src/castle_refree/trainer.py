@@ -551,24 +551,32 @@ class CastleTrainer:
                 row.update({key: value / max(batches, 1) for key, value in sums.items()})
                 self.refresh_cache()
                 phase_epoch += 1
+                improved = False
                 if early:
                     row["validation_loss"] = self.validation_loss(phase)
                     if row["validation_loss"] < best_loss - 1e-4:
                         best_loss, stale = row["validation_loss"], 0
                         best_state = copy.deepcopy(self.model.state_dict())
+                        improved = True
                     else:
                         stale += 1
                 self.history.append(row)
+                output = Path(self.cfg.data.output_dir)
+                self.write_history(output / "training_history_progress.csv")
                 print(json.dumps(row), flush=True)
-                if early and phase_epoch >= train.early_stop_min_epochs and stale >= train.early_stop_patience:
-                    break
+                if improved:
+                    self.save_checkpoint(output / "best_validation_checkpoint.pt")
                 if global_epoch % self.cfg.train.checkpoint_every == 0:
-                    self.save_checkpoint(Path(self.cfg.data.output_dir) / "checkpoint.pt")
+                    self.save_checkpoint(output / "checkpoint.pt")
+                if early and phase_epoch >= train.early_stop_min_epochs and stale >= train.early_stop_patience:
+                    self.save_checkpoint(output / "checkpoint.pt")
+                    break
             if early and best_state is not None:
                 # Restore the epoch with the best held-out ELBO before moving on.
                 self.model.load_state_dict(best_state)
                 self.history.append({"epoch": global_epoch, "phase": phase, "restored_best_validation": best_loss})
                 self.refresh_cache()
+                self.write_history(Path(self.cfg.data.output_dir) / "training_history_progress.csv")
         progress.close()
         return self
 
@@ -583,6 +591,17 @@ class CastleTrainer:
             },
             path,
         )
+
+    def write_history(self, path: Path) -> None:
+        """Atomically persist the latest epoch metrics for live monitoring."""
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = path.with_suffix(path.suffix + ".tmp")
+        fieldnames = list(dict.fromkeys(key for row in self.history for key in row)) or ["epoch"]
+        with temporary.open("w", newline="", encoding="utf-8") as handle:
+            writer = csv.DictWriter(handle, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(self.history)
+        temporary.replace(path)
 
     def load_checkpoint(self, path: str | Path) -> "CastleTrainer":
         checkpoint = torch.load(Path(path), map_location=self.device, weights_only=False)
@@ -661,11 +680,7 @@ class CastleTrainer:
         )
         np.savetxt(output / "cells.tsv", self.data.cell_ids, fmt="%s", delimiter="\t")
         np.savetxt(output / "genes.tsv", self.data.gene_ids, fmt="%s", delimiter="\t")
-        with (output / "training_history.csv").open("w", newline="", encoding="utf-8") as handle:
-            fieldnames = list(dict.fromkeys(key for row in self.history for key in row)) or ["epoch"]
-            writer = csv.DictWriter(handle, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerows(self.history)
+        self.write_history(output / "training_history.csv")
         with (output / "resolved_config.json").open("w", encoding="utf-8") as handle:
             json.dump(self.cfg.to_dict(), handle, indent=2)
         self.save_checkpoint(output / "castle_refree_model.pt")

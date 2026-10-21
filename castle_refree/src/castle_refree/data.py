@@ -45,8 +45,10 @@ def load_spatial_data(
 ) -> SpatialCountData:
     """Load the portable MatrixMarket bundle made by export_xenium_breast.R."""
     root = Path(input_dir)
-    required = ["counts.mtx", "genes.tsv", "cells.tsv", "spatial.csv"]
+    required = ["genes.tsv", "cells.tsv", "spatial.csv"]
     missing = [name for name in required if not (root / name).exists()]
+    if not (root / "counts.npz").exists() and not (root / "counts.mtx").exists():
+        missing.append("counts.npz or counts.mtx")
     if missing:
         raise FileNotFoundError(
             f"Missing files in {root}: {', '.join(missing)}. "
@@ -55,7 +57,11 @@ def load_spatial_data(
 
     genes = _read_vector(root / "genes.tsv")
     cells = _read_vector(root / "cells.tsv")
-    matrix = mmread(root / "counts.mtx")
+    matrix = (
+        sparse.load_npz(root / "counts.npz")
+        if (root / "counts.npz").exists()
+        else mmread(root / "counts.mtx")
+    )
     matrix = sparse.csr_matrix(matrix, dtype=np.float32)
     if matrix.shape == (len(genes), len(cells)):
         matrix = matrix.T.tocsr()

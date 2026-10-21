@@ -1,2 +1,4 @@
 embedding,cells,best_leiden_ari,leiden_nmi_at_best,best_resolution
 CASTLE i z_c (no niche),159226,0.551111728897562,0.6578153792720262,0.4
+scVI,159226,0.5262114196405284,0.6581503439799585,0.6
+CASTLE ii z_c (with niche),159226,0.5524476701201259,0.6641891141801948,0.6

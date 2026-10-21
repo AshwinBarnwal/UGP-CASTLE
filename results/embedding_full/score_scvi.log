@@ -1,0 +1,1 @@
+{"embedding": "scVI", "cells": 159226, "best_leiden_ari": 0.5262114196405284, "leiden_nmi_at_best": 0.6581503439799585, "best_resolution": 0.6}

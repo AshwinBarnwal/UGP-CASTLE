@@ -1,0 +1,24 @@
+[1/9] Loading exported sparse SPLIT counts...
+[2/9] Reading labels and CASTLE cell IDs...
+[3/9] Applying the paper-style cell and gene QC filters...
+[4/9] Normalizing and log-transforming 159,092 shared cells...
+[5/9] Computing centered, unscaled PCA (50 PCs)...
+[6/9] Running K-means and building the CASTLE PyNNDescent graph...
+[7/9] Leiden resolution sweep...
+Leiden:   0%|          | 0/10 [00:00<?, ?resolution/s]Leiden:  10%|#         | 1/10 [00:13<02:04, 13.88s/resolution]Leiden:  20%|##        | 2/10 [00:24<01:37, 12.14s/resolution]Leiden:  30%|###       | 3/10 [00:43<01:44, 14.94s/resolution]Leiden:  40%|####      | 4/10 [01:02<01:40, 16.69s/resolution]Leiden:  50%|#####     | 5/10 [01:22<01:29, 17.87s/resolution]Leiden:  60%|######    | 6/10 [01:39<01:10, 17.60s/resolution]Leiden:  70%|#######   | 7/10 [01:56<00:52, 17.37s/resolution]Leiden:  80%|########  | 8/10 [02:14<00:34, 17.46s/resolution]Leiden:  90%|######### | 9/10 [02:33<00:18, 18.11s/resolution]Leiden: 100%|##########| 10/10 [02:53<00:00, 18.75s/resolution]Leiden: 100%|##########| 10/10 [02:53<00:00, 17.37s/resolution]
+[8/9] Computing UMAP with CASTLE's settings...
+[9/9] Saving matched labels, metrics, and UMAP plots...
+
+SPLIT evaluation results
+------------------------
+Labeled ground-truth classes (K): 19
+Labeled cells shared after QC: 159,092
+Genes / PCs used: 313 / 50
+K-means ARI/NMI: 0.353986 / 0.597263
+K-means silhouette: 0.072688
+Cell-type silhouette: 0.011357
+Best Leiden ARI: 0.511251 at resolution 0.8
+Best Leiden NMI: 0.644983 at resolution 0.8
+Leiden silhouette at best-NMI resolution: 0.090322
+Best Leiden silhouette: 0.109300 at resolution 0.4 (sample size 2000)
+Saved results to: C:\Users\rayar\Documents\IIT Kanpur Academics\UGPs\UGP-2 (Hamim Zafar)\UGP-CASTLE\results\embedding_full\castle_i\pca_split_style

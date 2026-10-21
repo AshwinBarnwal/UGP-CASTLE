@@ -87,8 +87,9 @@ def train_scvi_scviva(args: argparse.Namespace) -> None:
     import torch
     from scviva.model._scviva import SCVIVA
 
-    if (args.output / "scviva.npy").exists():
-        print(f"{args.output / 'scviva.npy'} exists; skipping training", flush=True)
+    if (args.output / "scvi.npy").exists():
+        # scVI already trained here; scANVI/scVIVA were deliberately not run.
+        print(f"{args.output / 'scvi.npy'} exists; skipping training", flush=True)
         return
     if args.threads > 0:
         torch.set_num_threads(args.threads)
@@ -159,6 +160,71 @@ def score_embedding(embedding: np.ndarray, labels: np.ndarray, seed: int) -> dic
     }
 
 
+def plot_embedding(args: argparse.Namespace) -> None:
+    """UMAP coloured by the best-resolution Leiden clusters and by the labels.
+
+    Clusters use the same cells, neighbour graph (15 neighbours) and Leiden
+    settings as ``score``, so they are the ones behind the reported best ARI.
+    The figure follows evaluate_janesick_labels.py: umap-learn coordinates
+    (15 neighbours, min_dist 0.3), tab20 colours, legend beside each panel.
+    """
+    import anndata as ad
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import scanpy as sc
+    import umap
+    from matplotlib.lines import Line2D
+    from sklearn.metrics import adjusted_rand_score
+
+    cells = read_list(args.castle_fit / "cells.tsv")
+    labels = labels_for(cells, args.labels)
+    embedding = np.load(args.embedding)
+    keep = np.isfinite(embedding).all(axis=1) & (labels != "Unlabeled")
+    X = embedding[keep].astype(np.float32)
+    truth = labels[keep]
+    holder = ad.AnnData(np.zeros((len(X), 1), dtype=np.float32), obs=pd.DataFrame(index=cells[keep]))
+    holder.obsm["E"] = X
+    sc.pp.neighbors(holder, use_rep="E", n_neighbors=15, random_state=args.seed)
+    sc.tl.leiden(holder, resolution=args.resolution, random_state=args.seed, flavor="igraph",
+                 n_iterations=2, directed=False, key_added="leiden")
+    clusters = holder.obs["leiden"].astype(str).to_numpy()
+    ari = adjusted_rand_score(truth, clusters)
+    xy = umap.UMAP(n_neighbors=15, min_dist=0.3, metric="euclidean", random_state=args.seed).fit_transform(X)
+
+    def plot_labeling(ax, values, title):
+        values = pd.Series(values).astype(str).to_numpy()
+        categories = sorted(pd.unique(values), key=lambda v: (not v.isdigit(), int(v) if v.isdigit() else v))
+        codes = pd.Categorical(values, categories=categories).codes
+        cmap = plt.get_cmap("tab20", max(len(categories), 1))
+        ax.scatter(xy[:, 0], xy[:, 1], c=codes, cmap=cmap, vmin=-0.5,
+                   vmax=max(len(categories) - 0.5, 0.5), s=1.2, linewidths=0, rasterized=True)
+        ax.set_title(title)
+        ax.set_xlabel("UMAP 1")
+        ax.set_ylabel("UMAP 2")
+        ax.set_xticks([])
+        ax.set_yticks([])
+        handles = [Line2D([], [], marker="o", linestyle="", markersize=5, color=cmap(i), label=c)
+                   for i, c in enumerate(categories)]
+        ax.legend(handles=handles, loc="center left", bbox_to_anchor=(1.01, 0.5),
+                  fontsize=6, frameon=False, ncol=1)
+
+    args.output.mkdir(parents=True, exist_ok=True)
+    stem = args.stem or args.name.lower().replace(" ", "_")
+    pd.DataFrame({"cell_id": cells[keep], "ground_truth": truth, "leiden": clusters,
+                  "umap_1": xy[:, 0], "umap_2": xy[:, 1]}).to_csv(
+        args.output / f"{stem}_leiden_clusters.csv", index=False
+    )
+    fig, axes = plt.subplots(1, 2, figsize=(15, 7), constrained_layout=True)
+    plot_labeling(axes[0], clusters, f"{args.name}: Leiden clusters (best-ARI resolution {args.resolution:.1f}, ARI {ari:.3f})")
+    plot_labeling(axes[1], truth, "Ground-truth cell type")
+    fig.savefig(args.output / f"{stem}_umap_leiden_vs_ground_truth.png", dpi=220, bbox_inches="tight")
+    plt.close(fig)
+    print(json.dumps({"name": args.name, "resolution": args.resolution, "ari": ari,
+                      "clusters": int(pd.unique(clusters).size)}), flush=True)
+
+
 def pca_of(counts: np.ndarray) -> np.ndarray:
     from sklearn.decomposition import PCA
 
@@ -210,6 +276,14 @@ def main() -> None:
     p.add_argument("--output", type=Path, required=True, help="Directory for the latents")
     p.add_argument("--threads", type=int, default=0, help="Torch threads (0 = default)")
     p.set_defaults(func=train_scvi_scviva)
+    p = sub.add_parser("plot", parents=[common])
+    p.add_argument("--labels", type=Path, default=Path("data/xenium_r1_supervised_labels.csv"))
+    p.add_argument("--embedding", type=Path, required=True, help="path.npy in the fit's cell order")
+    p.add_argument("--name", required=True)
+    p.add_argument("--resolution", type=float, required=True, help="Best Leiden resolution from score")
+    p.add_argument("--stem", default=None, help="Output file name stem (default: from --name)")
+    p.add_argument("--output", type=Path, default=Path("results/embedding_full/plots"))
+    p.set_defaults(func=plot_embedding)
     p = sub.add_parser("score", parents=[common])
     p.add_argument("--labels", type=Path, default=Path("data/xenium_r1_supervised_labels.csv"))
     p.add_argument("--embedding", nargs="*", default=[], help="name=path.npy")

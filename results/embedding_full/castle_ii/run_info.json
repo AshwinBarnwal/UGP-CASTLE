@@ -1,0 +1,23 @@
+{
+  "experiment": "ii",
+  "cells": 164995,
+  "genes": 313,
+  "settings": {
+    "loss.kl_max": 0.5,
+    "model.intrinsic_dim": 16,
+    "model.prior_components": 30,
+    "model.encoder_input": "dual",
+    "train.num_threads": 6,
+    "train.joint_epochs": 40,
+    "model.niche_encoder": "contact_steps",
+    "model.niche_steps": 3,
+    "model.niche_input": "zc",
+    "loss.identity_recon_weight": 0.5,
+    "loss.block_delta_grad": true,
+    "loss.lambda_niche_zc": 1.0,
+    "loss.niche_target": "purified",
+    "loss.niche_group_weight": 1.0,
+    "contamination.freeze_in_joint": true
+  },
+  "hours": 9.15
+}
